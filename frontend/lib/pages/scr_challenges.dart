@@ -26,11 +26,12 @@ class _ChallengeScreenState extends State<ChallengeScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 15),
-                    child: Text(
-                      "Completed Challenges",
-                      style: theme.themeData.textTheme.titleSmall,
-                    )),
+                  padding: EdgeInsets.symmetric(horizontal: 15),
+                  child: Text(
+                    "Completed Challenges",
+                    style: theme.themeData.textTheme.titleSmall,
+                  ),
+                ),
                 Expanded(
                   child: ListView.builder(
                     itemCount: 100,

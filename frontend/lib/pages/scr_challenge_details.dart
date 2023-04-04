@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/pages/scr_acheivements.dart';
+import 'package:frontend/pages/scr_challenge_description.dart';
+import 'package:frontend/pages/scr_challenge_feed.dart';
 import 'package:frontend/pages/scr_challenges.dart';
 import 'package:frontend/pages/scr_profile.dart';
 import 'package:frontend/state/home_state.dart';
@@ -44,37 +46,42 @@ class _ChallengeDetailsScreenState extends State<ChallengeDetailsScreen> {
             }
 
             return SafeArea(
-                child: Padding(
-                    padding: const EdgeInsets.fromLTRB(15, 0, 15, 18),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
+                // child: Padding(
+                //     padding: const EdgeInsets.fromLTRB(15, 0, 15, 18),
+                child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                    padding: EdgeInsets.fromLTRB(15, 0, 15, 0),
+                    child: Column(children: [
+                      Row(children: [
+                        IconButton(
+                            onPressed: () => Navigator.pop(context),
+                            icon: Icon(
+                              Icons.arrow_back_ios,
+                              color: theme.colors.darkgrey,
+                            )),
                         Text(
                           "Challenge Title",
                           style: theme.themeData.textTheme.titleLarge,
                         ),
-                        const SizedBox(
-                          height: 5,
-                        ),
-                        ChallengeFilter(
-                            naviagtionCall: navigationCall, widgetObj: widget),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        Expanded(
-                            child: PageView(
-                                controller: widget._goalsController,
-                                physics: const NeverScrollableScrollPhysics(),
-                                children: [
-                              Container(
-                                child: Text("Details"),
-                              ),
-                              Container(
-                                child: Text("Feed"),
-                              ),
-                            ]))
-                      ],
-                    )));
+                      ]),
+                      const SizedBox(
+                        height: 5,
+                      ),
+                    ])),
+                ChallengeFilter(
+                    naviagtionCall: navigationCall, widgetObj: widget),
+                Expanded(
+                    child: PageView(
+                        controller: widget._goalsController,
+                        physics: const NeverScrollableScrollPhysics(),
+                        children: [
+                      ChallengeDescScreen(),
+                      ChallengeFeedScreen()
+                    ]))
+              ],
+            ));
           }),
     );
   }

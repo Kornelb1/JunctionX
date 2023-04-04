@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:frontend/models/user.dart';
+import 'package:frontend/services/profile_service.dart';
 import 'package:hive/hive.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -12,14 +13,25 @@ class UserPreferences {
   final storage = const FlutterSecureStorage();
 
   Future<bool> saveUser(
-      String token, String username, String name, Uint8List profilePic) async {
+    String token,
+    String username,
+    String fname,
+    String lname,
+    String email,
+    // Uint8List profilePic
+  ) async {
     try {
       await storage.write(key: "token", value: token);
 
       //save user to Hive
       var userBox = await Hive.openBox('user');
-      userBox.putAll(
-          {"username": username, "name": name, "profilePic": profilePic});
+      userBox.putAll({
+        "username": username,
+        "fname": fname,
+        "lname": lname,
+        "email": email,
+        // "profilePic": profilePic
+      });
 
       return true;
     } catch (e) {
@@ -30,7 +42,10 @@ class UserPreferences {
   Future<User> getUser() async {
     String token;
     String username;
-    String name;
+    String fname;
+    String lname;
+    String email;
+    // String profilePic;
 
     try {
       token = await storage.read(key: "token") ?? '';
@@ -38,12 +53,29 @@ class UserPreferences {
       //get user details from Hive
       var userBox = await Hive.openBox('user');
       username = userBox.get("username") ?? '';
-      name = userBox.get("name") ?? '';
+      fname = userBox.get("fname") ?? '';
+      lname = userBox.get("lname") ?? '';
+      email = userBox.get("email") ?? '';
+      // profilePic = userBox.get("profilePic") ?? '';
     } catch (e) {
-      return User(token: '', username: '', name: '');
+      return User(
+        token: '',
+        username: '',
+        fname: '',
+        lname: '',
+        email: '',
+        // profilePicture: ''
+      );
     }
 
-    User user = User(token: token, username: username, name: name);
+    User user = User(
+      token: token,
+      username: username,
+      fname: fname,
+      lname: lname,
+      email: email,
+      // profilePicture: profilePic
+    );
 
     return user;
   }
@@ -66,6 +98,31 @@ class UserPreferences {
 
 class ProfileState extends ChangeNotifier {
   User user = User();
+
+  ProfileService service = ProfileService();
+
+  bool loading = false;
+
+  Future<Map<String, dynamic>> login(String username, String password) async {
+    loading = false;
+    setWaiting();
+    print(username);
+    print(password);
+    Map<String, dynamic> value = await service.login(username, password);
+    // await Future.delayed(const Duration(seconds: 1));
+    setWaiting();
+    return value;
+  }
+
+  void setWaiting() {
+    if (loading == false) {
+      loading = true;
+      notifyListeners();
+    } else {
+      loading = false;
+      notifyListeners();
+    }
+  }
 
   void getUserDetails() async {
     user = await UserPreferences().getUser();
