@@ -1,6 +1,4 @@
 from django.contrib.auth import authenticate, get_user_model, login, logout
-from django.db.models import OuterRef, Subquery, Value
-from django.db.models.functions import Coalesce
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 
@@ -10,9 +8,9 @@ from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.throttling import UserRateThrottle
-from django.views.decorators.csrf import *
 
 from users.serializers import UserSerializer
+
 
 class UserViewSet(viewsets.ReadOnlyModelViewSet, mixins.UpdateModelMixin):
     """
@@ -29,7 +27,8 @@ class UserViewSet(viewsets.ReadOnlyModelViewSet, mixins.UpdateModelMixin):
         """Get the current authenticated user"""
         serializer = self.get_serializer(request.user)
         return Response(serializer.data)
-    
+
+
 class LoginView(APIView):
     permission_classes = ()
     authentication_classes = ()
@@ -52,7 +51,7 @@ class LoginView(APIView):
                 return Response(
                     {
                         "message": "Logged in successfully",
-                        "user": UserGetSerializer(user).data,
+                        "user": UserSerializer(user).data,
                     },
                     status=status.HTTP_200_OK,
                 )
