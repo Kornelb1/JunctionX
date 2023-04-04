@@ -5,6 +5,7 @@ from . import views
 
 router = SimpleRouter()
 router.register(r"challenges", views.ChallengeViewSet, basename="challenges")
+router.register(r"feeds", views.ChallengeFeedViewSet, basename="feeds")
 
 
 urlpatterns = [

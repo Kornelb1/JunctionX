@@ -34,12 +34,14 @@ from users.views import LoginView, logout_view
 
 from users.urls import router as users_router
 from challenges.urls import router as challenge_router
+from notifications.urls import router as notifications_router
 
 """V1 ROUTER"""
 router = DefaultRouter()
 
 router.registry.extend(users_router.registry)
 router.registry.extend(challenge_router.registry)
+router.registry.extend(notifications_router.registry)
 
 # Default API Info
 api_info = openapi.Info(

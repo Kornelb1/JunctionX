@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     "django_filters",
     "users",
     "challenges",
+    "notifications",
 ]
 
 TEST_RUNNER = "xmlrunner.extra.djangotestrunner.XMLTestRunner"
