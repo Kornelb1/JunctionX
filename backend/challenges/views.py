@@ -2,7 +2,11 @@ from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
 
 from .models import Challenge, Post, Participant
-from .serializers import ChallengeSerializer, PostSerializer
+from .serializers import (
+    ChallengeSerializer,
+    PostSerializer,
+    ParticipantSerializer,
+)
 
 
 class ChallengeViewSet(viewsets.ReadOnlyModelViewSet):
@@ -11,14 +15,15 @@ class ChallengeViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = ChallengeSerializer
 
 
-class ChallengeFeedViewSet(viewsets.ModelViewSet):
+class PostViewSet(viewsets.ModelViewSet):
     queryset = Post.objects.all()
     permission_classes = [IsAuthenticated]
     serializer_class = PostSerializer
+    search_fields = ['title']
 
     def get_queryset(self):
         qs = self.queryset
-        print("ah")
+        print(self.request)
         # All posts for all my challenges
         only_my_challenges = self.request.query_params.get("my_challenges", None)
         if only_my_challenges:
@@ -29,11 +34,15 @@ class ChallengeFeedViewSet(viewsets.ModelViewSet):
             # Filter posts by those challenges
             qs = qs.filter(challenge__in=my_challenges)
             return qs
-        print("Huh")
+
         # All posts for challenge
         challenge = self.request.query_params.get("challenge", None)
         if challenge:
-            print(qs)
-            qs = qs.filter(challenge__pk=challenge.pk)
-            print(qs)
+            qs = qs.filter(challenge__pk=challenge)
         return qs
+
+
+class ParticipantViewSet(viewsets.ModelViewSet):
+    queryset = Participant.objects.all()
+    permission_classes = [IsAuthenticated]
+    serializer_class = ParticipantSerializer

@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import Challenge, Post
+from .models import Challenge, Post, Participant
 
 
 class ChallengeSerializer(serializers.ModelSerializer):
@@ -35,4 +35,13 @@ class PostSerializer(serializers.ModelSerializer):
             "name",
             "likes",
             "datetime",
+        ]
+
+
+class ParticipantSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Participant
+        fields = [
+            "user",
+            "challenge",
         ]

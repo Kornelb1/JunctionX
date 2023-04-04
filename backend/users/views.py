@@ -1,9 +1,9 @@
 from django.contrib.auth import authenticate, get_user_model, login, logout
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
-from django.contrib.auth.decorators import login_required
 
 from rest_framework import viewsets, filters, status, mixins
+from rest_framework.authtoken.models import Token
 from rest_framework.decorators import action
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
@@ -12,6 +12,7 @@ from rest_framework.throttling import UserRateThrottle
 
 from users.serializers import UserSerializer
 from .models import FriendRequest
+
 
 class UserViewSet(viewsets.ReadOnlyModelViewSet, mixins.UpdateModelMixin):
     """
@@ -50,6 +51,7 @@ class UserViewSet(viewsets.ReadOnlyModelViewSet, mixins.UpdateModelMixin):
         else:
             return Response("Friend Request Declined")
 
+
 class LoginView(APIView):
     permission_classes = ()
     authentication_classes = ()
@@ -58,6 +60,7 @@ class LoginView(APIView):
     def post(self, request, format=None):
         username = request.data.get("username", None)
         password = request.data.get("password", None)
+        print(username, password)
         if username is None or password is None:
             return Response(
                 {"message": "Username and password cannot be empty"},
@@ -69,10 +72,12 @@ class LoginView(APIView):
                 login(request, user)
                 # CsrfViewMiddleware automatically adds csrf token as cookie
                 # SessionMiddleware automatically adds session id as cookie
+                token, created = Token.objects.get_or_create(user=user)
                 return Response(
                     {
                         "message": "Logged in successfully",
                         "user": UserSerializer(user).data,
+                        "token": token.key,
                     },
                     status=status.HTTP_200_OK,
                 )
