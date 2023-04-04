@@ -1,6 +1,7 @@
 from django.contrib.auth import authenticate, get_user_model, login, logout
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth.decorators import login_required
 
 from rest_framework import viewsets, filters, status, mixins
 from rest_framework.decorators import action
@@ -10,7 +11,7 @@ from rest_framework.response import Response
 from rest_framework.throttling import UserRateThrottle
 
 from users.serializers import UserSerializer
-
+from .models import FriendRequest
 
 class UserViewSet(viewsets.ReadOnlyModelViewSet, mixins.UpdateModelMixin):
     """
@@ -28,6 +29,26 @@ class UserViewSet(viewsets.ReadOnlyModelViewSet, mixins.UpdateModelMixin):
         serializer = self.get_serializer(request.user)
         return Response(serializer.data)
 
+    @action(methods=["POST"], detail=False)
+    def send_friend_request(request, userID):
+        from_user = request.user
+        to_user = get_user_model().objects.get(id=userID)
+        friend_request, created = FriendRequest.objects.get_or_create(from_user=from_user, to_user=to_user)
+        if created:
+            return Response("Friend Request Sent", status=status.HTTP_200_OK)
+        else:
+            return Response("Friend Request already sent", status=status.HTTP_200_OK)
+
+    @action(methods=["POST"], detail=False)
+    def accept_friend_request(request, requestID):
+        friend_request = FriendRequest.objects.get(id=requestID)
+        if friend_request.to_user == request.user:
+            friend_request.to_user.friends.add(friend_request.from_user)
+            friend_request.from_user.friends.add(friend_request.to_user)
+            friend_request.delete()
+            return Response("Friend Request Accepted")
+        else:
+            return Response("Friend Request Declined")
 
 class LoginView(APIView):
     permission_classes = ()
