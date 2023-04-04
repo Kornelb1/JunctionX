@@ -61,9 +61,7 @@ class UserManager(BaseUserManager):
             raise ValueError("Superuser must have is_staff=True.")
         if extra_fields.get("is_superuser") is not True:
             raise ValueError("Superuser must have is_superuser=True.")
-        return self.create_user(
-            email=email, password=password, **extra_fields
-        )
+        return self.create_user(email=email, password=password, **extra_fields)
 
 
 class User(AbstractBaseUser, PermissionsMixin):
@@ -75,6 +73,9 @@ class User(AbstractBaseUser, PermissionsMixin):
     username = models.CharField(max_length=255, unique=True, null=True, blank=True)
     first_name = models.CharField(max_length=255, null=True, blank=True)
     last_name = models.CharField(max_length=255, null=True, blank=True)
+
+    profile_picture = models.FileField(null=True, blank=True)
+    friends = models.ManyToManyField("User", blank=True)
 
     # Permissions field.
     is_verified = models.BooleanField(default=False)
@@ -91,3 +92,16 @@ class User(AbstractBaseUser, PermissionsMixin):
 
 class Profile(models.Model):
     pass
+
+
+class Stats(models.Model):
+    emissions = models.FloatField(default=0.0, help_text="Amount in kilograms of CO2 saved") # kilo ton / kilograms - steps
+    water = models.FloatField(default=0.0, help_text="Amount in litres of water saved") # litres
+    energy = models.FloatField(default=0.0, help_text="Amount in watts of energy saved") # watts
+    plastic = models.FloatField(default=0.0, help_text="Amount in bottles of plastic saved") # bottles
+    trees = models.FloatField(default=0.0, help_text="Number of trees planted") # trees
+
+
+class FriendRequest(models.Model):
+    from_user = models.ForeignKey("User", related_name="from_user", on_delete=models.CASCADE)
+    to_user = models.ForeignKey("User", related_name="to_user", on_delete=models.CASCADE)

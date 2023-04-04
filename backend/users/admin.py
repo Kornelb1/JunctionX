@@ -5,6 +5,7 @@ from django.utils.translation import gettext_lazy as _
 
 # Register your models here.
 
+
 @admin.register(get_user_model())
 class UserAdmin(UserAdmin):
     search_fields = ["email", "first_name", "last_name"]
@@ -34,8 +35,6 @@ class UserAdmin(UserAdmin):
             {
                 "fields": (
                     "last_login",
-                    "created_at",
-                    "updated_at",
                 )
             },
         ),
