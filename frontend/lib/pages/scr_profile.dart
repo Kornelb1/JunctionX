@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/models/user.dart';
 import 'package:frontend/state/profile_state.dart';
 import 'package:frontend/theme/theme_manager.dart';
 import 'package:frontend/widgets/base_widget.dart';
@@ -21,6 +22,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return Scaffold(
       body: BaseWidget<ProfileState>(
           state: Provider.of<ProfileState>(context),
+          onStateReady: (state) async {
+            state.getUserDetails();
+          },
           builder: (context, state, child) {
             return SafeArea(
                 child: Padding(
@@ -82,7 +86,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                               .themeData.textTheme.bodySmall,
                                           floatingLabelBehavior:
                                               FloatingLabelBehavior.always,
-                                          hintText: "Amy",
+                                          hintText:
+                                              "${state.user.fname} ${state.user.lname}",
                                           hintStyle: theme
                                               .themeData.textTheme.bodyMedium)),
                                   const SizedBox(
@@ -98,7 +103,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                               .themeData.textTheme.bodySmall,
                                           floatingLabelBehavior:
                                               FloatingLabelBehavior.always,
-                                          hintText: "amy_stell",
+                                          hintText: state.user.username,
                                           hintStyle: theme
                                               .themeData.textTheme.bodyMedium)),
                                   const SizedBox(
@@ -114,7 +119,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                               .themeData.textTheme.bodySmall,
                                           floatingLabelBehavior:
                                               FloatingLabelBehavior.always,
-                                          hintText: "amy.stell5@gmail.com",
+                                          hintText: state.user.email,
                                           hintStyle: theme
                                               .themeData.textTheme.bodyMedium)),
                                   const SizedBox(

@@ -5,7 +5,6 @@ import 'package:frontend/models/user.dart';
 class FeedItem {
   final String media;
   final int likes;
-  final String caption;
   final String title;
   final int id;
   final bool isSaved;
@@ -14,7 +13,6 @@ class FeedItem {
   FeedItem(
       {this.media = '',
       this.likes = 0,
-      this.caption = '',
       required this.user,
       this.title = '',
       this.id = -1,
@@ -24,7 +22,6 @@ class FeedItem {
     return FeedItem(
       media: responseData['media'],
       likes: responseData['likes'],
-      caption: responseData['caption'],
       user: User(),
     );
   }

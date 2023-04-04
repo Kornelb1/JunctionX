@@ -2,27 +2,28 @@ import 'package:flutter/material.dart';
 import 'package:frontend/models/feedItem.dart';
 import 'package:frontend/models/user.dart';
 import 'package:frontend/state/home_state.dart';
+import 'package:frontend/state/search_state.dart';
 import 'package:frontend/theme/theme_manager.dart';
 import 'package:frontend/widgets/base_widget.dart';
 import 'package:frontend/widgets/feed_item_widget.dart';
 import 'package:provider/provider.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+class ChallengeFeedScreen extends StatefulWidget {
+  const ChallengeFeedScreen({super.key});
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  State<ChallengeFeedScreen> createState() => _ChallengeFeedScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _ChallengeFeedScreenState extends State<ChallengeFeedScreen> {
   @override
   Widget build(BuildContext context) {
     final ThemeManager theme =
         Provider.of<ThemeManager>(context, listen: false);
 
     return Scaffold(
-      body: BaseWidget<HomeState>(
-          state: Provider.of<HomeState>(context),
+      body: BaseWidget<SearchState>(
+          state: Provider.of<SearchState>(context),
           builder: (context, state, child) {
             return SafeArea(
                 child: Padding(
@@ -30,10 +31,6 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                            "Home",
-                            style: theme.themeData.textTheme.titleLarge,
-                          ),
                           Expanded(
                               child: ListView.builder(
                                   itemCount: 100,
