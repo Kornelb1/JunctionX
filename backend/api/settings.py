@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     "drf_yasg",
     "django_filters",
     "users",
+    "challenges",
 ]
 
 TEST_RUNNER = "xmlrunner.extra.djangotestrunner.XMLTestRunner"
