@@ -10,45 +10,45 @@ String enumName(AppTheme anyEnum) {
 final appThemeData = {
   AppTheme.LIGHT: ThemeData(
     textTheme: TextTheme(
-      titleLarge: GoogleFonts.quicksand(
+      titleLarge: GoogleFonts.poppins(
         textStyle: const TextStyle(
-          fontSize: 30,
-          color: Color(0xff925FBA),
-          fontWeight: FontWeight.w700,
-        ),
-      ),
-      titleMedium: GoogleFonts.quicksand(
-        textStyle: const TextStyle(
-          fontSize: 34,
-          color: Color(0xff925FBA),
-          fontWeight: FontWeight.w700,
-        ),
-      ),
-      titleSmall: GoogleFonts.quicksand(
-        textStyle: const TextStyle(
-          fontSize: 34,
-          color: Color(0xff925FBA),
-          fontWeight: FontWeight.w700,
-        ),
-      ),
-      bodyLarge: GoogleFonts.quicksand(
-        textStyle: const TextStyle(
-          fontSize: 22,
-          color: Color(0xff000000),
+          fontSize: 24,
+          color: Color(0xff383F51),
           fontWeight: FontWeight.w600,
         ),
       ),
-      bodyMedium: GoogleFonts.quicksand(
+      titleMedium: GoogleFonts.poppins(
         textStyle: const TextStyle(
-          fontSize: 18,
-          color: Color(0xff000000),
+          fontSize: 16,
+          color: Color(0xff383F51),
+          fontWeight: FontWeight.w400,
+        ),
+      ),
+      titleSmall: GoogleFonts.poppins(
+        textStyle: const TextStyle(
+          fontSize: 16,
+          color: Color(0xff383F51),
           fontWeight: FontWeight.w600,
         ),
       ),
-      bodySmall: GoogleFonts.quicksand(
+      bodyLarge: GoogleFonts.poppins(
         textStyle: const TextStyle(
-          fontSize: 18,
-          color: Color(0xff262626),
+          fontSize: 16,
+          color: Color(0xff383F51),
+          fontWeight: FontWeight.w400,
+        ),
+      ),
+      bodyMedium: GoogleFonts.poppins(
+        textStyle: const TextStyle(
+          fontSize: 16,
+          color: Color(0xff383F51),
+          fontWeight: FontWeight.w400,
+        ),
+      ),
+      bodySmall: GoogleFonts.poppins(
+        textStyle: const TextStyle(
+          fontSize: 12,
+          color: Color(0xff383F51),
           fontWeight: FontWeight.w400,
         ),
       ),
