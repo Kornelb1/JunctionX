@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/models/challenge.dart';
 import 'package:frontend/models/feedItem.dart';
 import 'package:frontend/models/user.dart';
 import 'package:frontend/state/home_state.dart';
@@ -9,7 +10,9 @@ import 'package:frontend/widgets/feed_item_widget.dart';
 import 'package:provider/provider.dart';
 
 class ChallengeFeedScreen extends StatefulWidget {
-  const ChallengeFeedScreen({super.key});
+  ChallengeFeedScreen({super.key, required this.challenge});
+
+  Challenge challenge;
 
   @override
   State<ChallengeFeedScreen> createState() => _ChallengeFeedScreenState();

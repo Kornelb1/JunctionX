@@ -143,6 +143,15 @@ class ProfileState extends ChangeNotifier {
     }
   }
 
+  Future<bool> isUserLoggedIn() async {
+    User user = await UserPreferences().getUser();
+    return (user.fname != '' &&
+        user.token != '' &&
+        user.email != '' &&
+        user.lname != '' &&
+        user.username != '');
+  }
+
   ImageProvider<Object> image = const NetworkImage(
       'https://www.publicdomainpictures.net/pictures/30000/nahled/plain-white-background.jpg');
 

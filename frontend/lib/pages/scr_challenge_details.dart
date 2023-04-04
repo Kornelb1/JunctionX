@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/models/challenge.dart';
 import 'package:frontend/pages/scr_acheivements.dart';
 import 'package:frontend/pages/scr_challenge_description.dart';
 import 'package:frontend/pages/scr_challenge_feed.dart';
@@ -14,7 +15,9 @@ import 'package:frontend/widgets/filter_widget.dart';
 import 'package:provider/provider.dart';
 
 class ChallengeDetailsScreen extends StatefulWidget {
-  ChallengeDetailsScreen({super.key});
+  ChallengeDetailsScreen({super.key, required this.challenge});
+
+  Challenge challenge;
 
   PageController _goalsController = PageController(initialPage: 0);
   int currentPage = 0;
@@ -36,7 +39,6 @@ class _ChallengeDetailsScreenState extends State<ChallengeDetailsScreen> {
             void navigationCall(int value) {
               setState(() {
                 widget.currentPage = value;
-                // widget._goalsController.jumpToPage(value);
                 widget._goalsController.animateToPage(
                   value,
                   duration: const Duration(milliseconds: 300),
@@ -46,8 +48,6 @@ class _ChallengeDetailsScreenState extends State<ChallengeDetailsScreen> {
             }
 
             return SafeArea(
-                // child: Padding(
-                //     padding: const EdgeInsets.fromLTRB(15, 0, 15, 18),
                 child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -62,7 +62,7 @@ class _ChallengeDetailsScreenState extends State<ChallengeDetailsScreen> {
                               color: theme.colors.darkgrey,
                             )),
                         Text(
-                          "Challenge Title",
+                          widget.challenge.title,
                           style: theme.themeData.textTheme.titleLarge,
                         ),
                       ]),
@@ -77,8 +77,8 @@ class _ChallengeDetailsScreenState extends State<ChallengeDetailsScreen> {
                         controller: widget._goalsController,
                         physics: const NeverScrollableScrollPhysics(),
                         children: [
-                      ChallengeDescScreen(),
-                      ChallengeFeedScreen()
+                      ChallengeDescScreen(challenge: widget.challenge),
+                      ChallengeFeedScreen(challenge: widget.challenge)
                     ]))
               ],
             ));

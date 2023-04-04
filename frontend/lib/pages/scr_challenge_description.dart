@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/models/challenge.dart';
 import 'package:frontend/models/feedItem.dart';
 import 'package:frontend/models/user.dart';
 import 'package:frontend/state/home_state.dart';
@@ -9,7 +10,9 @@ import 'package:frontend/widgets/feed_item_widget.dart';
 import 'package:provider/provider.dart';
 
 class ChallengeDescScreen extends StatefulWidget {
-  const ChallengeDescScreen({super.key});
+  ChallengeDescScreen({super.key, required this.challenge});
+
+  Challenge challenge;
 
   @override
   State<ChallengeDescScreen> createState() => _ChallengeDescScreenState();
@@ -26,15 +29,13 @@ class _ChallengeDescScreenState extends State<ChallengeDescScreen> {
           state: Provider.of<SearchState>(context),
           builder: (context, state, child) {
             return SafeArea(
-                // child: Padding(
-                // padding: const EdgeInsets.fromLTRB(15, 0, 15, 18),
                 child: SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   SizedBox(height: 30),
                   Container(
-                      child: Center(child: Text("Short Description")),
+                      child: Center(child: Text("short description")),
                       height: MediaQuery.of(context).size.width / 3,
                       width: MediaQuery.of(context).size.width - 50,
                       decoration: BoxDecoration(

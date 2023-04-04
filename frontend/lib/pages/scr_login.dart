@@ -7,8 +7,8 @@ import 'package:provider/provider.dart';
 import '../theme/theme_manager.dart';
 import '../widgets/wavy_widget.dart';
 
-class LoginPage extends StatelessWidget {
-  LoginPage({super.key});
+class LoginScreen extends StatelessWidget {
+  LoginScreen({super.key});
 
   TextEditingController _usernameController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
