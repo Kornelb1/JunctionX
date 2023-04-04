@@ -30,56 +30,105 @@ class _ChallengeDescScreenState extends State<ChallengeDescScreen> {
           builder: (context, state, child) {
             return SafeArea(
                 child: SingleChildScrollView(
+                    child: Padding(
+              padding: EdgeInsets.fromLTRB(15, 0, 15, 0),
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  SizedBox(height: 30),
                   Container(
-                      child: Center(child: Text("short description")),
-                      height: MediaQuery.of(context).size.width / 3,
-                      width: MediaQuery.of(context).size.width - 50,
                       decoration: BoxDecoration(
-                        color: theme.colors.green,
-                        borderRadius: BorderRadius.only(
-                            topRight: Radius.circular(30),
-                            bottomRight: Radius.circular(30)),
-                      )),
-                  SizedBox(height: 30),
-                  Container(
-                      child: Center(child: Text("Reward")),
-                      height: MediaQuery.of(context).size.width / 3,
-                      width: MediaQuery.of(context).size.width - 50,
-                      decoration: BoxDecoration(
-                        color: theme.colors.green,
-                        borderRadius: BorderRadius.only(
-                            topRight: Radius.circular(30),
-                            bottomRight: Radius.circular(30)),
-                      )),
-                  SizedBox(height: 30),
-                  Container(
-                      child: Center(child: Text("Proof")),
-                      height: MediaQuery.of(context).size.width / 3,
-                      width: MediaQuery.of(context).size.width - 50,
-                      decoration: BoxDecoration(
-                        color: theme.colors.green,
-                        borderRadius: BorderRadius.only(
-                            topRight: Radius.circular(30),
-                            bottomRight: Radius.circular(30)),
-                      )),
-                  SizedBox(height: 30),
-                  Container(
-                      child: Center(child: Text("Description")),
-                      height: MediaQuery.of(context).size.width / 3,
-                      width: MediaQuery.of(context).size.width - 50,
-                      decoration: BoxDecoration(
-                        color: theme.colors.green,
-                        borderRadius: BorderRadius.only(
-                            topRight: Radius.circular(30),
-                            bottomRight: Radius.circular(30)),
-                      ))
+                          borderRadius:
+                              BorderRadius.all(Radius.circular(30.0))),
+                      child: Padding(
+                          padding: EdgeInsets.all(8),
+                          child:
+                              Column(mainAxisSize: MainAxisSize.min, children: [
+                            Stack(
+                              children: [
+                                if (widget.challenge.photo != '')
+                                  ClipRRect(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(24)),
+                                    child: AspectRatio(
+                                        aspectRatio: 1,
+                                        child: Image.network(
+                                          widget.challenge.photo,
+                                          fit: BoxFit.cover,
+                                        )),
+                                  ), // Picture of product
+                              ],
+                            )
+                          ]))),
+                  Card(
+                    child: Padding(
+                        padding: EdgeInsets.all(20),
+                        child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "Challenge",
+                                style: theme.themeData.textTheme.titleSmall,
+                              ),
+                              SizedBox(
+                                height: 5,
+                              ),
+                              Text(widget.challenge.shortDesc)
+                            ])),
+                  ),
+                  SizedBox(height: 10),
+                  Card(
+                    child: Padding(
+                        padding: EdgeInsets.all(20),
+                        child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "You Earn",
+                                style: theme.themeData.textTheme.titleSmall,
+                              ),
+                              SizedBox(
+                                height: 5,
+                              ),
+                              Text(widget.challenge.reward)
+                            ])),
+                  ),
+                  SizedBox(height: 10),
+                  Card(
+                    child: Padding(
+                        padding: EdgeInsets.all(20),
+                        child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "Criteria",
+                                style: theme.themeData.textTheme.titleSmall,
+                              ),
+                              SizedBox(
+                                height: 5,
+                              ),
+                              Text(widget.challenge.proof)
+                            ])),
+                  ),
+                  SizedBox(height: 10),
+                  Card(
+                    child: Padding(
+                        padding: EdgeInsets.all(20),
+                        child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "More Information",
+                                style: theme.themeData.textTheme.titleSmall,
+                              ),
+                              SizedBox(
+                                height: 5,
+                              ),
+                              Text(widget.challenge.longDesc)
+                            ])),
+                  ),
                 ],
               ),
-            ));
+            )));
           }),
     );
   }
