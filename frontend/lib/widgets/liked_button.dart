@@ -78,6 +78,7 @@ class _LikeButtonState extends State<LikeButton> with TickerProviderStateMixin {
                     color: widget.liked
                         ? theme.colors.green
                         : theme.colors.lightgrey,
+                    size: 30,
                   ),
                 ),
               ),

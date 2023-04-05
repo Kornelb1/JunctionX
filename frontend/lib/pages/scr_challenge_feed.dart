@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:frontend/models/challenge.dart';
 import 'package:frontend/models/feedItem.dart';
 import 'package:frontend/models/user.dart';
+import 'package:frontend/providers/search_provider.dart';
 import 'package:frontend/state/home_state.dart';
 import 'package:frontend/state/search_state.dart';
 import 'package:frontend/theme/theme_manager.dart';
@@ -42,7 +43,9 @@ class _ChallengeFeedScreenState extends State<ChallengeFeedScreen> {
                                   itemCount: state.feed.length,
                                   itemBuilder:
                                       (BuildContext context, int index) {
-                                    return ItemFeed(item: state.feed[index]);
+                                    return SearchProvider(
+                                        child:
+                                            ItemFeed(item: state.feed[index]));
                                   }))
                         ])));
           }),

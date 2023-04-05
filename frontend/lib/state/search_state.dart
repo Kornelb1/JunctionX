@@ -75,6 +75,13 @@ class SearchState extends ChangeNotifier {
     return service.joinChallenge(id);
   }
 
+  bool isVerified = false;
+
+  void verifyImage(String image, String word, int id) async {
+    isVerified = await service.isVerified(image, word, id);
+    notifyListeners();
+  }
+
   XFile? _xImage;
 
   Future selectOrTakePhoto(ImageSource imageSource) async {

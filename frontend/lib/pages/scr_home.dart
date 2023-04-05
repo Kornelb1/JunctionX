@@ -4,6 +4,7 @@ import 'package:frontend/models/user.dart';
 import 'package:frontend/pages/scr_friends.dart';
 import 'package:frontend/providers/home_provider.dart';
 import 'package:frontend/providers/profile_provider.dart';
+import 'package:frontend/providers/search_provider.dart';
 import 'package:frontend/state/home_state.dart';
 import 'package:frontend/theme/theme_manager.dart';
 import 'package:frontend/widgets/base_widget.dart';
@@ -61,7 +62,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                   itemCount: state.feed.length,
                                   itemBuilder:
                                       (BuildContext context, int index) {
-                                    return ItemFeed(item: state.feed[index]);
+                                    return SearchProvider(
+                                        child:
+                                            ItemFeed(item: state.feed[index]));
                                   }))
                         ])));
           }),

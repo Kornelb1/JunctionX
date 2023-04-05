@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:frontend/models/challenge.dart';
+import 'package:frontend/models/stats.dart';
 import 'package:frontend/models/user.dart';
 import 'package:frontend/services/profile_service.dart';
 import 'package:hive/hive.dart';
@@ -111,6 +112,38 @@ class ProfileState extends ChangeNotifier {
 
     gettingFriends = false;
     gotFriends = true;
+    notifyListeners();
+  }
+
+  bool gotStats = false;
+  bool gettingStats = false;
+
+  Stats friend_stats = Stats();
+
+  void getFriendsStats(int id) async {
+    gettingStats = true;
+    notifyListeners();
+
+    friend_stats = await service.getFriendsStats(id);
+
+    gettingStats = false;
+    gotStats = true;
+    notifyListeners();
+  }
+
+  bool gotMyStats = false;
+  bool gettingMyStats = false;
+
+  Stats myStats = Stats();
+
+  void getMyStats() async {
+    gettingMyStats = true;
+    notifyListeners();
+
+    friend_stats = await service.getMyStats();
+
+    gettingMyStats = false;
+    gotMyStats = true;
     notifyListeners();
   }
 

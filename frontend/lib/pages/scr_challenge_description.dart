@@ -203,7 +203,7 @@ class _ChallengeDescScreenState extends State<ChallengeDescScreen> {
     }
     if (c.trees > 0) {
       icons.add(Icon(
-        Icons.nature_outlined,
+        Icons.forest,
         color: theme.colors.green,
         size: 30,
       ));

@@ -3,6 +3,7 @@ import 'dart:ffi';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:frontend/models/challenge.dart';
+import 'package:frontend/models/stats.dart';
 import 'package:frontend/state/profile_state.dart';
 import 'package:hive/hive.dart';
 import 'package:http/http.dart';
@@ -164,6 +165,75 @@ class ProfileService {
       return users;
     } catch (e) {
       return users;
+    }
+  }
+
+  Future<Stats> getFriendsStats(int id) async {
+    Client client = Client();
+    User user = await UserPreferences().getUser();
+
+    String url;
+
+    url = 'http://10.173.45.133:8000/api/v1/challenges/stats/?user_id=$id';
+
+    Uri uri = Uri.parse(url);
+
+    var headers = {
+      'Content-Type': 'application/json',
+      'Authorization': "Token ${user.token}"
+    };
+
+    Stats stats = Stats();
+
+    try {
+      Response response = await client.get(uri, headers: headers);
+
+      // print(response.body);
+      // print(response.statusCode);
+
+      Map<String, dynamic> responseDecoded = jsonDecode(response.body)[0];
+      if (response.statusCode == 200) {
+        stats = Stats.fromJson(responseDecoded);
+      }
+
+      return stats;
+    } catch (e) {
+      return stats;
+    }
+  }
+
+  Future<Stats> getMyStats() async {
+    Client client = Client();
+    User user = await UserPreferences().getUser();
+
+    String url;
+
+    Stats stats = Stats();
+
+    url = 'http://10.173.45.133:8000/api/v1/challenges/my-stats/';
+
+    Uri uri = Uri.parse(url);
+
+    var headers = {
+      'Content-Type': 'application/json',
+      'Authorization': "Token ${user.token}"
+    };
+
+    try {
+      Response response = await client.get(uri, headers: headers);
+
+      print(response.body);
+      print(response.statusCode);
+
+      var responseDecoded = jsonDecode(response.body)[0];
+      if (response.statusCode == 200) {
+        stats = Stats.fromJson(responseDecoded);
+      }
+
+      return stats;
+    } catch (e) {
+      // print(e);
+      return stats;
     }
   }
 }
