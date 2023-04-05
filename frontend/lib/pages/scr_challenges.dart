@@ -21,6 +21,9 @@ class _ChallengeScreenState extends State<ChallengeScreen> {
     return Scaffold(
       body: BaseWidget<ProfileState>(
           state: Provider.of<ProfileState>(context),
+          onStateReady: (state) {
+            state.getMyChallenges();
+          },
           builder: (context, state, child) {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -28,13 +31,13 @@ class _ChallengeScreenState extends State<ChallengeScreen> {
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 15),
                   child: Text(
-                    "Completed Challenges",
+                    "Challenges",
                     style: theme.themeData.textTheme.titleSmall,
                   ),
                 ),
                 Expanded(
                   child: ListView.builder(
-                    itemCount: 100,
+                    itemCount: state.myChallenges.length,
                     itemBuilder: (BuildContext context, int index) {
                       return Card(
                           color: theme.colors.backgroundColor,
@@ -53,9 +56,9 @@ class _ChallengeScreenState extends State<ChallengeScreen> {
                                 Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text("Challenge $index"),
+                                    Text(state.myChallenges[index].title),
                                     Text(
-                                      "Date",
+                                      state.myChallenges[index].startDate,
                                       style:
                                           theme.themeData.textTheme.bodySmall,
                                     )

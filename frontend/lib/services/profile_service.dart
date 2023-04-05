@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:ffi';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:frontend/models/challenge.dart';
 import 'package:frontend/state/profile_state.dart';
 import 'package:hive/hive.dart';
 import 'package:http/http.dart';
@@ -11,6 +12,43 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 class ProfileService {
+  Future<List<Challenge>> getMyChallenges() async {
+    Client client = Client();
+    User user = await UserPreferences().getUser();
+
+    String url = '';
+
+    url = 'http://10.173.45.133:8000/api/v1/challenges/?my_challenges=true';
+
+    var headers = {
+      'Content-Type': 'application/json',
+      'Authorization': "Token ${user.token}"
+    };
+
+    List<Challenge> challenges = [];
+
+    Uri uri = Uri.parse(url);
+
+    try {
+      Response response = await client.get(uri, headers: headers);
+
+      Map<String, dynamic> responseDecoded = jsonDecode(response.body);
+
+      // print(response.statusCode);
+      // print(response.body);
+
+      if (response.statusCode == 200) {
+        for (var result in responseDecoded['results']) {
+          challenges.add(Challenge.fromJson(result));
+        }
+      }
+      return challenges;
+    } catch (e) {
+      // print(e);
+      return challenges;
+    }
+  }
+
   Future<Map<String, dynamic>> login(String username, String password) async {
     var url = "http://10.173.45.133:8000/api/login/";
     var map = <String, dynamic>{};

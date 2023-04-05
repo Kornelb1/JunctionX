@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:frontend/models/challenge.dart';
 import 'package:frontend/models/user.dart';
 import 'package:frontend/services/profile_service.dart';
 import 'package:hive/hive.dart';
@@ -142,6 +143,21 @@ class ProfileState extends ChangeNotifier {
 
   void getUserDetails() async {
     user = await UserPreferences().getUser();
+    notifyListeners();
+  }
+
+  bool gotSearchedMyChallenges = false;
+  bool gettingSearchedMyChallenges = false;
+  List<Challenge> myChallenges = [];
+
+  void getMyChallenges() async {
+    gettingSearchedMyChallenges = true;
+    notifyListeners();
+
+    myChallenges = await service.getMyChallenges();
+
+    gettingSearchedMyChallenges = false;
+    gotSearchedMyChallenges = true;
     notifyListeners();
   }
 
