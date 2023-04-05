@@ -40,20 +40,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                                   color: theme.colors.backgroundColor,
                                   child: Padding(
                                     padding: EdgeInsets.all(10),
-                                    child:
-                                        // Row(
-                                        //   mainAxisAlignment:
-                                        //       MainAxisAlignment.start,
-                                        //   children: [
-                                        //     Icon(
-                                        //       Icons.notifications,
-                                        //       color: theme.colors.green,
-                                        //       size: 30,
-                                        //     ),
-                                        //     SizedBox(
-                                        //       width: 5,
-                                        //     ),
-                                        Column(
+                                    child: Column(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [

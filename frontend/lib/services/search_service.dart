@@ -72,8 +72,8 @@ class SearchService {
 
       Map<String, dynamic> responseDecoded = jsonDecode(response.body);
 
-      print(response.statusCode);
-      print(response.body);
+      // print(response.statusCode);
+      // print(response.body);
 
       if (response.statusCode == 200) {
         for (var result in responseDecoded['results']) {
@@ -82,7 +82,7 @@ class SearchService {
       }
       return challenges;
     } catch (e) {
-      print(e);
+      // print(e);
       return challenges;
     }
   }
@@ -230,7 +230,7 @@ class SearchService {
         return {'status': false, 'message': 'unsuccessful'};
       }
     } catch (e) {
-      print(e);
+      // print(e);
       return {
         'status': false,
         'message': 'Oops something went wrong, please try again'

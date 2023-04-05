@@ -49,7 +49,7 @@ class SearchState extends ChangeNotifier {
     notifyListeners();
 
     exploreChallenges = await service.getExplore();
-    print(exploreChallenges);
+    // print(exploreChallenges);
 
     gettingExplore = false;
     gotExplore = true;

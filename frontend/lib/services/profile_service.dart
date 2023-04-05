@@ -122,7 +122,7 @@ class ProfileService {
 
       users = users.where((user) => user_ids.contains(user.id)).toList();
 
-      print(users);
+      // print(users);
 
       return users;
     } catch (e) {
@@ -150,13 +150,13 @@ class ProfileService {
     try {
       Response response = await client.get(uri, headers: headers);
 
-      print(response.body);
-      print(response.statusCode);
+      // print(response.body);
+      // print(response.statusCode);
 
       Map<String, dynamic> responseDecoded = jsonDecode(response.body);
       if (response.statusCode == 200) {
         ids = responseDecoded['friends'].cast<int>();
-        print(ids);
+        // print(ids);
       }
 
       users = await getUsers(ids);

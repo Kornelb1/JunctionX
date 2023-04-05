@@ -123,8 +123,8 @@ class ProfileState extends ChangeNotifier {
   Future<Map<String, dynamic>> login(String username, String password) async {
     loading = false;
     setWaiting();
-    print(username);
-    print(password);
+    // print(username);
+    // print(password);
     Map<String, dynamic> value = await service.login(username, password);
     // await Future.delayed(const Duration(seconds: 1));
     setWaiting();
