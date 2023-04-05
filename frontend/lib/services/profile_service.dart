@@ -16,17 +16,17 @@ class ProfileService {
     map['username'] = username;
     map['password'] = password;
 
-    print(username);
-    print(password);
+    // print(username);
+    // print(password);
 
     try {
       var response = await http
           .post(Uri.parse(url), body: map)
           .timeout(Duration(seconds: 1));
 
-      print(response.body);
-      print(response.statusCode);
-      print(response.headers);
+      // print(response.body);
+      // print(response.statusCode);
+      // print(response.headers);
 
       if (response.statusCode == 200) {
         var responseDecoded = jsonDecode(response.body)["user"];
@@ -45,7 +45,7 @@ class ProfileService {
         return {'status': false, 'message': 'Login unsuccessful'};
       }
     } catch (e) {
-      print(e);
+      // print(e);
       return {
         'status': false,
         'message': 'Oops something went wrong, please try again'

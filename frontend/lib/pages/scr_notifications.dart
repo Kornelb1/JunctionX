@@ -20,6 +20,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
     return Scaffold(
       body: BaseWidget<NotificationState>(
           state: Provider.of<NotificationState>(context),
+          onStateReady: (state) => {state.getNotifications()},
           builder: (context, state, child) {
             return SafeArea(
                 child: Padding(
@@ -33,13 +34,15 @@ class _NotificationScreenState extends State<NotificationScreen> {
                         ),
                         Expanded(
                           child: ListView.builder(
-                            itemCount: 100,
+                            itemCount: state.nots.length,
                             itemBuilder: (BuildContext context, int index) {
                               return Card(
                                   color: theme.colors.backgroundColor,
                                   child: Padding(
                                     padding: EdgeInsets.all(10),
                                     child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
                                       children: [
                                         Icon(
                                           Icons.notifications,
@@ -53,9 +56,12 @@ class _NotificationScreenState extends State<NotificationScreen> {
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
                                           children: [
-                                            Text("Notification $index"),
                                             Text(
-                                              "Date",
+                                              state.nots[index].title,
+                                              overflow: TextOverflow.ellipsis,
+                                            ),
+                                            Text(
+                                              state.nots[index].date,
                                               style: theme.themeData.textTheme
                                                   .bodySmall,
                                             )

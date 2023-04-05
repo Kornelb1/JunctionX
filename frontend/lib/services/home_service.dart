@@ -31,6 +31,10 @@ class HomeService {
       Response response = await client.get(uri, headers: headers);
 
       Map<String, dynamic> responseDecoded = jsonDecode(response.body);
+
+      print(response.body);
+      print(response.statusCode);
+
       if (response.statusCode == 200) {
         for (var result in responseDecoded['results']) {
           feed.add(FeedItem.fromJson(result));

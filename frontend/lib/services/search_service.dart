@@ -102,8 +102,8 @@ class SearchService {
 
       Map<String, dynamic> responseDecoded = jsonDecode(response.body);
 
-      print(response.statusCode);
-      print(response.body);
+      // print(response.statusCode);
+      // print(response.body);
 
       if (response.statusCode == 200) {
         for (var result in responseDecoded['results']) {
@@ -123,7 +123,7 @@ class SearchService {
 
     String url = '';
 
-    url = 'http://10.173.45.133:8000/api/v1/feeds/?challenges=$id';
+    url = 'http://10.173.45.133:8000/api/v1/feeds/?challenge=$id';
 
     Uri uri = Uri.parse(url);
 
