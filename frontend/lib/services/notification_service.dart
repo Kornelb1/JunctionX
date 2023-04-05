@@ -49,4 +49,34 @@ class NotificationService {
       return nots;
     }
   }
+
+  Future<bool> acceptRequest(var id) async {
+    Client client = Client();
+    User user = await UserPreferences().getUser();
+
+    String url;
+
+    url =
+        'http://10.173.45.133:8000/api/v1/users/accept_friend_request/?requestID=${id}';
+
+    Uri uri = Uri.parse(url);
+
+    var headers = {
+      'Content-Type': 'application/json',
+      'Authorization': "Token ${user.token}"
+    };
+
+    try {
+      Response response = await client.post(uri, headers: headers);
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        return true;
+      }
+
+      return false;
+    } catch (e) {
+      print(e);
+      return false;
+    }
+  }
 }

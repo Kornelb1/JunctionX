@@ -18,4 +18,11 @@ class NotificationState extends ChangeNotifier {
     gotNots = true;
     notifyListeners();
   }
+
+  bool friendRequestAccepted = false;
+
+  void acceptRequest(var id) async {
+    friendRequestAccepted = await service.acceptRequest(id);
+    notifyListeners();
+  }
 }

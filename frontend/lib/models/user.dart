@@ -33,4 +33,9 @@ class User {
   String toString() {
     return 'User token: $token, username: $username, name: $fname';
   }
+
+  @override
+  bool operator ==(Object other) {
+    return (other is User && other.id == id);
+  }
 }

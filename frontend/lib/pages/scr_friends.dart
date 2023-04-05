@@ -49,10 +49,21 @@ class _FriendsScreenState extends State<FriendsScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          "Your Friends",
-                          style: theme.themeData.textTheme.titleLarge,
-                        ),
+                        Row(children: [
+                          IconButton(
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                              icon: Icon(
+                                Icons.arrow_back_ios,
+                                color: theme.colors.darkgrey,
+                                size: 30,
+                              )),
+                          Text(
+                            "Your Friends",
+                            style: theme.themeData.textTheme.titleLarge,
+                          ),
+                        ]),
                         const SizedBox(
                           height: 5,
                         ),

@@ -36,40 +36,87 @@ class _NotificationScreenState extends State<NotificationScreen> {
                           child: ListView.builder(
                             itemCount: state.nots.length,
                             itemBuilder: (BuildContext context, int index) {
-                              return Card(
-                                  color: theme.colors.backgroundColor,
-                                  child: Padding(
-                                    padding: EdgeInsets.all(10),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Container(
-                                          height: 50,
-                                          child: Text(
-                                            state.nots[index].title,
+                              if (!state.nots[index].isFriendRequest) {
+                                return Card(
+                                    color: theme.colors.backgroundColor,
+                                    child: Padding(
+                                      padding: EdgeInsets.all(10),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Container(
+                                            height: 50,
+                                            child: Text(
+                                              state.nots[index].title,
+                                            ),
                                           ),
-                                        ),
-                                        Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              Text(
-                                                state.nots[index].date,
-                                                style: theme.themeData.textTheme
-                                                    .bodySmall,
-                                              ),
-                                              Icon(
-                                                Icons.notifications,
-                                                color: theme.colors.green,
-                                                size: 30,
-                                              ),
-                                            ])
-                                      ],
-                                      // )
-                                      // ],
-                                    ),
-                                  ));
+                                          Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Text(
+                                                  state.nots[index].date,
+                                                  style: theme.themeData
+                                                      .textTheme.bodySmall,
+                                                ),
+                                                Icon(
+                                                  Icons.notifications,
+                                                  color: theme.colors.green,
+                                                  size: 30,
+                                                ),
+                                              ])
+                                        ],
+                                      ),
+                                    ));
+                              } else {
+                                return Card(
+                                    color: theme.colors.green,
+                                    child: Padding(
+                                      padding: EdgeInsets.all(10),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Container(
+                                            height: 50,
+                                            child: Text(
+                                              state.nots[index].title,
+                                              style: TextStyle(
+                                                  color: theme
+                                                      .colors.backgroundColor),
+                                            ),
+                                          ),
+                                          Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Text(
+                                                  state.nots[index].date,
+                                                  style: theme.themeData
+                                                      .textTheme.bodySmall!
+                                                      .copyWith(
+                                                          color: theme.colors
+                                                              .backgroundColor),
+                                                ),
+                                                IconButton(
+                                                  icon: Icon(
+                                                    Icons.person_add,
+                                                    color: theme
+                                                        .colors.backgroundColor,
+                                                    size: 30,
+                                                  ),
+                                                  onPressed: () =>
+                                                      state.acceptRequest(state
+                                                          .nots[index].content),
+                                                ),
+                                              ])
+                                        ],
+                                      ),
+                                    ));
+                              }
                             },
                           ),
                         )

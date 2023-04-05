@@ -115,6 +115,28 @@ class ProfileState extends ChangeNotifier {
     notifyListeners();
   }
 
+  bool gotRecommended = false;
+  bool gettingRecommended = false;
+  List<User> recommended = [];
+
+  void getRecommended() async {
+    gettingRecommended = true;
+    notifyListeners();
+
+    recommended = await service.getRecommended();
+
+    gettingRecommended = false;
+    gotRecommended = true;
+    notifyListeners();
+  }
+
+  bool friendRequestSent = false;
+
+  void sendRequest(User user) async {
+    friendRequestSent = await service.sendRequest(user);
+    notifyListeners();
+  }
+
   bool gotStats = false;
   bool gettingStats = false;
 

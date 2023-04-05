@@ -6,13 +6,15 @@ class Notifications {
   final bool read;
   final String content;
   final String date;
+  final bool isFriendRequest;
 
   Notifications(
       {this.user = -1,
       this.title = '',
       this.read = false,
       this.content = '',
-      this.date = ''});
+      this.date = '',
+      this.isFriendRequest = false});
 
   factory Notifications.fromJson(Map<String, dynamic> responseData) {
     return Notifications(
@@ -21,7 +23,8 @@ class Notifications {
         title: responseData['title'],
         read: responseData['read'],
         content: responseData['content'],
-        date: responseData['datetime']);
+        date: responseData['datetime'],
+        isFriendRequest: responseData['is_friend_request']);
   }
 
   @override

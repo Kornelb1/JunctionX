@@ -168,6 +168,48 @@ class ProfileService {
     }
   }
 
+  Future<List<User>> getRecommended() async {
+    Client client = Client();
+    User user = await UserPreferences().getUser();
+
+    String url;
+    List<User> users = [];
+
+    url = 'http://10.173.45.133:8000/api/v1/users/';
+
+    Uri uri = Uri.parse(url);
+
+    var headers = {
+      'Content-Type': 'application/json',
+      'Authorization': "Token ${user.token}"
+    };
+
+    try {
+      Response response = await client.get(uri, headers: headers);
+
+      // print(response.body);
+      // print(response.statusCode);
+
+      Map<String, dynamic> responseDecoded = jsonDecode(response.body);
+      if (response.statusCode == 200) {
+        for (var result in responseDecoded['results']) {
+          users.add(User.fromJson(result));
+        }
+      }
+
+      List<User> friends = await getFriends();
+
+      //filter where users are not me and not in friends list
+      users = users
+          .where((u) => u.id != user.id && friends.contains(u) == false)
+          .toList();
+
+      return users;
+    } catch (e) {
+      return users;
+    }
+  }
+
   Future<Stats> getFriendsStats(int id) async {
     Client client = Client();
     User user = await UserPreferences().getUser();
@@ -234,6 +276,36 @@ class ProfileService {
     } catch (e) {
       // print(e);
       return stats;
+    }
+  }
+
+  Future<bool> sendRequest(User user) async {
+    Client client = Client();
+    User user = await UserPreferences().getUser();
+
+    String url;
+
+    url =
+        'http://10.173.45.133:8000/api/v1/users/send_friend_request/?userID=${user.id}';
+
+    Uri uri = Uri.parse(url);
+
+    var headers = {
+      'Content-Type': 'application/json',
+      'Authorization': "Token ${user.token}"
+    };
+
+    try {
+      Response response = await client.post(uri, headers: headers);
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        return true;
+      }
+
+      return false;
+    } catch (e) {
+      print(e);
+      return false;
     }
   }
 }
