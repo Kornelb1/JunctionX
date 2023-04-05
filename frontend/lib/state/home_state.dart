@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/models/feedItem.dart';
-import 'package:frontend/services/home_srvice.dart';
+import 'package:frontend/services/home_service.dart';
 
 class HomeState extends ChangeNotifier {
   HomeService service = HomeService();
