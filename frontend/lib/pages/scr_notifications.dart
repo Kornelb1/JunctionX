@@ -40,34 +40,34 @@ class _NotificationScreenState extends State<NotificationScreen> {
                                   color: theme.colors.backgroundColor,
                                   child: Padding(
                                     padding: EdgeInsets.all(10),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
-                                        Icon(
-                                          Icons.notifications,
-                                          color: theme.colors.green,
-                                          size: 30,
+                                        Container(
+                                          height: 50,
+                                          child: Text(
+                                            state.nots[index].title,
+                                          ),
                                         ),
-                                        SizedBox(
-                                          width: 5,
-                                        ),
-                                        Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              state.nots[index].title,
-                                              overflow: TextOverflow.ellipsis,
-                                            ),
-                                            Text(
-                                              state.nots[index].date,
-                                              style: theme.themeData.textTheme
-                                                  .bodySmall,
-                                            )
-                                          ],
-                                        )
+                                        Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Text(
+                                                state.nots[index].date,
+                                                style: theme.themeData.textTheme
+                                                    .bodySmall,
+                                              ),
+                                              Icon(
+                                                Icons.notifications,
+                                                color: theme.colors.green,
+                                                size: 30,
+                                              ),
+                                            ])
                                       ],
+                                      // )
+                                      // ],
                                     ),
                                   ));
                             },

@@ -5,14 +5,14 @@ import 'package:frontend/theme/theme_manager.dart';
 import 'package:frontend/widgets/base_widget.dart';
 import 'package:provider/provider.dart';
 
-class ChallengeScreen extends StatefulWidget {
-  const ChallengeScreen({super.key});
+class RecommendedFriendsScreen extends StatefulWidget {
+  const RecommendedFriendsScreen({super.key});
 
   @override
-  State<ChallengeScreen> createState() => _ChallengeScreenState();
+  State<RecommendedFriendsScreen> createState() => _RecommendedFriendsState();
 }
 
-class _ChallengeScreenState extends State<ChallengeScreen> {
+class _RecommendedFriendsState extends State<RecommendedFriendsScreen> {
   @override
   Widget build(BuildContext context) {
     final ThemeManager theme =
@@ -21,9 +21,6 @@ class _ChallengeScreenState extends State<ChallengeScreen> {
     return Scaffold(
       body: BaseWidget<ProfileState>(
           state: Provider.of<ProfileState>(context),
-          onStateReady: (state) {
-            state.getMyChallenges();
-          },
           builder: (context, state, child) {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -31,13 +28,13 @@ class _ChallengeScreenState extends State<ChallengeScreen> {
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 15),
                   child: Text(
-                    "Challenges",
+                    "Recommended Friends",
                     style: theme.themeData.textTheme.titleSmall,
                   ),
                 ),
                 Expanded(
                   child: ListView.builder(
-                    itemCount: state.myChallenges.length,
+                    itemCount: 100,
                     itemBuilder: (BuildContext context, int index) {
                       return Card(
                           color: theme.colors.backgroundColor,
@@ -56,12 +53,7 @@ class _ChallengeScreenState extends State<ChallengeScreen> {
                                 Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text(state.myChallenges[index].title),
-                                    Text(
-                                      state.myChallenges[index].startDate,
-                                      style:
-                                          theme.themeData.textTheme.bodySmall,
-                                    )
+                                    Text("Friend $index"),
                                   ],
                                 )
                               ],

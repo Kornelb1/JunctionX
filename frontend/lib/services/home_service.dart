@@ -32,8 +32,8 @@ class HomeService {
 
       Map<String, dynamic> responseDecoded = jsonDecode(response.body);
 
-      print(response.body);
-      print(response.statusCode);
+      // print(response.body);
+      // print(response.statusCode);
 
       if (response.statusCode == 200) {
         for (var result in responseDecoded['results']) {

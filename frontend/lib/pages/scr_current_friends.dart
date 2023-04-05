@@ -5,14 +5,14 @@ import 'package:frontend/theme/theme_manager.dart';
 import 'package:frontend/widgets/base_widget.dart';
 import 'package:provider/provider.dart';
 
-class ChallengeScreen extends StatefulWidget {
-  const ChallengeScreen({super.key});
+class CurrentFriendsScreen extends StatefulWidget {
+  const CurrentFriendsScreen({super.key});
 
   @override
-  State<ChallengeScreen> createState() => _ChallengeScreenState();
+  State<CurrentFriendsScreen> createState() => _CurrentFriendsState();
 }
 
-class _ChallengeScreenState extends State<ChallengeScreen> {
+class _CurrentFriendsState extends State<CurrentFriendsScreen> {
   @override
   Widget build(BuildContext context) {
     final ThemeManager theme =
@@ -22,7 +22,7 @@ class _ChallengeScreenState extends State<ChallengeScreen> {
       body: BaseWidget<ProfileState>(
           state: Provider.of<ProfileState>(context),
           onStateReady: (state) {
-            state.getMyChallenges();
+            state.getFriends();
           },
           builder: (context, state, child) {
             return Column(
@@ -31,13 +31,13 @@ class _ChallengeScreenState extends State<ChallengeScreen> {
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 15),
                   child: Text(
-                    "Challenges",
+                    "Current Friends",
                     style: theme.themeData.textTheme.titleSmall,
                   ),
                 ),
                 Expanded(
                   child: ListView.builder(
-                    itemCount: state.myChallenges.length,
+                    itemCount: state.friends.length,
                     itemBuilder: (BuildContext context, int index) {
                       return Card(
                           color: theme.colors.backgroundColor,
@@ -46,7 +46,7 @@ class _ChallengeScreenState extends State<ChallengeScreen> {
                             child: Row(
                               children: [
                                 Icon(
-                                  Icons.workspace_premium,
+                                  Icons.account_circle,
                                   color: theme.colors.green,
                                   size: 30,
                                 ),
@@ -56,12 +56,8 @@ class _ChallengeScreenState extends State<ChallengeScreen> {
                                 Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text(state.myChallenges[index].title),
                                     Text(
-                                      state.myChallenges[index].startDate,
-                                      style:
-                                          theme.themeData.textTheme.bodySmall,
-                                    )
+                                        "${state.friends[index].fname} ${state.friends[index].lname}"),
                                   ],
                                 )
                               ],

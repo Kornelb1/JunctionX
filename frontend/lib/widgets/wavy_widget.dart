@@ -6,7 +6,9 @@ import 'package:provider/provider.dart';
 import '../theme/theme_manager.dart';
 
 class WavyHeader extends StatelessWidget {
-  const WavyHeader({super.key});
+  WavyHeader({super.key, required this.child});
+
+  Widget child;
 
   @override
   Widget build(BuildContext context) {
@@ -15,10 +17,10 @@ class WavyHeader extends StatelessWidget {
     return ClipPath(
       clipper: BottomWaveClipper(),
       child: Container(
-        height: MediaQuery.of(context).size.height * 0.5,
-        width: MediaQuery.of(context).size.width,
-        color: theme.colors.green,
-      ),
+          height: MediaQuery.of(context).size.height * 0.5,
+          width: MediaQuery.of(context).size.width,
+          color: theme.colors.green,
+          child: child),
     );
   }
 }

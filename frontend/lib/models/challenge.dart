@@ -13,6 +13,11 @@ class Challenge {
   final String proof;
   final String longDesc;
   final String reward;
+  final double emissions;
+  final double water;
+  final double energy;
+  final double plastic;
+  final double trees;
 
   Challenge(
       {this.id = -1,
@@ -26,7 +31,12 @@ class Challenge {
       this.sponsor = -1,
       this.owner = -1,
       this.photo = '',
-      this.participants = -1});
+      this.participants = -1,
+      this.emissions = 0,
+      this.water = 0,
+      this.plastic = 0,
+      this.trees = 0,
+      this.energy = 0});
 
   factory Challenge.fromJson(Map<String, dynamic> responseData) {
     return Challenge(
@@ -41,7 +51,12 @@ class Challenge {
         sponsor: responseData['sponsor'],
         owner: responseData['owner'],
         photo: responseData['photo'],
-        participants: responseData['participants']);
+        participants: responseData['participants'],
+        emissions: responseData['emissions'],
+        water: responseData['water'],
+        plastic: responseData['plastic'],
+        trees: responseData['trees'],
+        energy: responseData['energy']);
   }
 
   @override

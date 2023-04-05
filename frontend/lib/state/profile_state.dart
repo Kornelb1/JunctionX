@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:frontend/models/challenge.dart';
 import 'package:frontend/models/user.dart';
 import 'package:frontend/services/profile_service.dart';
 import 'package:hive/hive.dart';
@@ -18,6 +19,7 @@ class UserPreferences {
     String fname,
     String lname,
     String email,
+    int id,
     // Uint8List profilePic
   ) async {
     try {
@@ -30,6 +32,7 @@ class UserPreferences {
         "fname": fname,
         "lname": lname,
         "email": email,
+        "id": id
         // "profilePic": profilePic
       });
 
@@ -45,6 +48,7 @@ class UserPreferences {
     String fname;
     String lname;
     String email;
+    int id;
     // String profilePic;
 
     try {
@@ -56,26 +60,24 @@ class UserPreferences {
       fname = userBox.get("fname") ?? '';
       lname = userBox.get("lname") ?? '';
       email = userBox.get("email") ?? '';
+      id = userBox.get('id');
       // profilePic = userBox.get("profilePic") ?? '';
     } catch (e) {
       return User(
-        token: '',
-        username: '',
-        fname: '',
-        lname: '',
-        email: '',
-        // profilePicture: ''
-      );
+          token: '', username: '', fname: '', lname: '', email: '', id: -1
+          // profilePicture: ''
+          );
     }
 
     User user = User(
-      token: token,
-      username: username,
-      fname: fname,
-      lname: lname,
-      email: email,
-      // profilePicture: profilePic
-    );
+        token: token,
+        username: username,
+        fname: fname,
+        lname: lname,
+        email: email,
+        id: id
+        // profilePicture: profilePic
+        );
 
     return user;
   }
@@ -97,6 +99,21 @@ class UserPreferences {
 }
 
 class ProfileState extends ChangeNotifier {
+  bool gotFriends = false;
+  bool gettingFriends = false;
+  List<User> friends = [];
+
+  void getFriends() async {
+    gettingFriends = true;
+    notifyListeners();
+
+    friends = await service.getFriends();
+
+    gettingFriends = false;
+    gotFriends = true;
+    notifyListeners();
+  }
+
   User user = User();
 
   ProfileService service = ProfileService();
@@ -106,8 +123,8 @@ class ProfileState extends ChangeNotifier {
   Future<Map<String, dynamic>> login(String username, String password) async {
     loading = false;
     setWaiting();
-    print(username);
-    print(password);
+    // print(username);
+    // print(password);
     Map<String, dynamic> value = await service.login(username, password);
     // await Future.delayed(const Duration(seconds: 1));
     setWaiting();
@@ -126,6 +143,21 @@ class ProfileState extends ChangeNotifier {
 
   void getUserDetails() async {
     user = await UserPreferences().getUser();
+    notifyListeners();
+  }
+
+  bool gotSearchedMyChallenges = false;
+  bool gettingSearchedMyChallenges = false;
+  List<Challenge> myChallenges = [];
+
+  void getMyChallenges() async {
+    gettingSearchedMyChallenges = true;
+    notifyListeners();
+
+    myChallenges = await service.getMyChallenges();
+
+    gettingSearchedMyChallenges = false;
+    gotSearchedMyChallenges = true;
     notifyListeners();
   }
 

@@ -31,7 +31,14 @@ class LoginScreen extends StatelessWidget {
             ),
             SafeArea(
                 child: Column(children: [
-              WavyHeader(),
+              WavyHeader(
+                child: Center(
+                  child: Image.asset(
+                    'assets/logo.png',
+                    width: MediaQuery.of(context).size.width * 0.8,
+                  ),
+                ),
+              ),
               Spacer(),
               Padding(
                   padding: const EdgeInsets.fromLTRB(15, 0, 15, 18),
@@ -111,8 +118,11 @@ class LoginScreen extends StatelessWidget {
                             ScaffoldMessenger.of(context)
                                 .showSnackBar(snackBar);
                           }
-                        })
-                  ])))
+                        }),
+                  ]))),
+              SizedBox(
+                height: 50,
+              )
             ]))
           ]);
         },
