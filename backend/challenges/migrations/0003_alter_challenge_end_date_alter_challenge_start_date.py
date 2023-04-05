@@ -6,18 +6,18 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('challenges', '0002_alter_challenge_sponsor'),
+        ("challenges", "0002_alter_challenge_sponsor"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='challenge',
-            name='end_date',
+            model_name="challenge",
+            name="end_date",
             field=models.DateTimeField(blank=True, null=True),
         ),
         migrations.AlterField(
-            model_name='challenge',
-            name='start_date',
+            model_name="challenge",
+            name="start_date",
             field=models.DateTimeField(blank=True, null=True),
         ),
     ]
