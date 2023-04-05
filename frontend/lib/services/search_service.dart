@@ -72,17 +72,18 @@ class SearchService {
 
       Map<String, dynamic> responseDecoded = jsonDecode(response.body);
 
-      // print(response.statusCode);
-      // print(response.body);
+      print(response.statusCode);
+      print(response.body);
 
       if (response.statusCode == 200) {
         for (var result in responseDecoded['results']) {
+          print(result);
           challenges.add(Challenge.fromJson(result));
         }
       }
       return challenges;
     } catch (e) {
-      // print(e);
+      print(e);
       return challenges;
     }
   }

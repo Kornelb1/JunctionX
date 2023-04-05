@@ -89,7 +89,15 @@ class _ChallengeDescScreenState extends State<ChallengeDescScreen> {
                               SizedBox(
                                 height: 5,
                               ),
-                              Text(widget.challenge.reward)
+                              Text(widget.challenge.reward),
+                              SizedBox(
+                                height: 5,
+                              ),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                children: getIcons(widget.challenge, theme),
+                              )
                             ])),
                   ),
                   SizedBox(height: 10),
@@ -168,5 +176,46 @@ class _ChallengeDescScreenState extends State<ChallengeDescScreen> {
             )));
           }),
     );
+  }
+
+  List<Widget> getIcons(Challenge c, ThemeManager theme) {
+    List<Widget> icons = [];
+    if (c.emissions > 0) {
+      icons.add(Icon(
+        Icons.co2_outlined,
+        color: theme.colors.green,
+        size: 30,
+      ));
+    }
+    if (c.energy > 0) {
+      icons.add(Icon(
+        Icons.electric_bolt,
+        color: theme.colors.green,
+        size: 30,
+      ));
+    }
+    if (c.water > 0) {
+      icons.add(Icon(
+        Icons.water_drop,
+        color: theme.colors.green,
+        size: 30,
+      ));
+    }
+    if (c.trees > 0) {
+      icons.add(Icon(
+        Icons.nature_outlined,
+        color: theme.colors.green,
+        size: 30,
+      ));
+    }
+    if (c.plastic > 0) {
+      icons.add(Icon(
+        Icons.local_cafe,
+        color: theme.colors.green,
+        size: 30,
+      ));
+    }
+
+    return icons;
   }
 }

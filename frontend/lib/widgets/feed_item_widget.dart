@@ -59,7 +59,7 @@ class ItemFeedState extends State<ItemFeed> {
                         height: 48,
                         child: AspectRatio(
                           aspectRatio: 1,
-                          child: (widget.item.profilePic != null)
+                          child: (widget.item.profilePic != '')
                               ? ClipOval(
                                   child: Image.network(
                                   widget.item.profilePic,
@@ -99,6 +99,9 @@ class ItemFeedState extends State<ItemFeed> {
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
+                            InkWell(
+                              child: Container(child: Text("Verify Image")),
+                            ),
                             LikeButton(
                               liked: widget.item.isSaved,
                               onLike: () => print("liked"),
