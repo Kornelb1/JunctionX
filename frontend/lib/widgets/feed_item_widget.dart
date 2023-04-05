@@ -59,10 +59,10 @@ class ItemFeedState extends State<ItemFeed> {
                         height: 48,
                         child: AspectRatio(
                           aspectRatio: 1,
-                          child: (widget.item.user.profilePicture != null)
+                          child: (widget.item.profilePic != null)
                               ? ClipOval(
                                   child: Image.network(
-                                  widget.item.user.profilePicture,
+                                  widget.item.profilePic,
                                   fit: BoxFit.cover,
                                 ))
                               : ClipOval(
@@ -88,7 +88,7 @@ class ItemFeedState extends State<ItemFeed> {
                           Text(widget.item.title,
                               style: theme.themeData.textTheme.titleSmall),
                           Text(
-                            widget.item.user.username,
+                            widget.item.name,
                           ),
                         ],
                       ),

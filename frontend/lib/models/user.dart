@@ -8,13 +8,14 @@ class User {
   final String email;
   final String profilePicture;
 
-  User(
-      {this.token = '',
-      this.username = '',
-      this.fname = '',
-      this.lname = '',
-      this.email = '',
-      this.profilePicture = ''});
+  User({
+    this.token = '',
+    this.username = '',
+    this.fname = '',
+    this.lname = '',
+    this.email = '',
+    this.profilePicture = '',
+  });
 
   factory User.fromJson(Map<String, dynamic> responseData) {
     return User(

@@ -6,23 +6,27 @@ class FeedItem {
   final String media;
   final int likes;
   final String title;
-  final int id;
+  final int owner;
+  final String name;
+  final String profilePic;
   final bool isSaved;
-  final User user; //change to user object
 
   FeedItem(
       {this.media = '',
       this.likes = 0,
-      required this.user,
       this.title = '',
-      this.id = -1,
+      this.name = '',
+      this.profilePic = '',
+      this.owner = -1,
       this.isSaved = false});
 
   factory FeedItem.fromJson(Map<String, dynamic> responseData) {
     return FeedItem(
-      media: responseData['media'],
+      media: responseData['photo'],
       likes: responseData['likes'],
-      user: User(),
+      title: responseData['title'],
+      owner: responseData["owner"],
+      name: responseData["name"],
     );
   }
 }

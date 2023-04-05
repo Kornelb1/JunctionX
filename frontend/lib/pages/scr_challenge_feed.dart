@@ -27,6 +27,9 @@ class _ChallengeFeedScreenState extends State<ChallengeFeedScreen> {
     return Scaffold(
       body: BaseWidget<SearchState>(
           state: Provider.of<SearchState>(context),
+          onStateReady: (state) {
+            state.getFeed(widget.challenge.id);
+          },
           builder: (context, state, child) {
             return SafeArea(
                 child: Padding(
@@ -36,21 +39,10 @@ class _ChallengeFeedScreenState extends State<ChallengeFeedScreen> {
                         children: [
                           Expanded(
                               child: ListView.builder(
-                                  itemCount: 100,
+                                  itemCount: state.feed.length,
                                   itemBuilder:
                                       (BuildContext context, int index) {
-                                    return ItemFeed(
-                                      item: FeedItem(
-                                          user: User(
-                                              username: "Amy",
-                                              profilePicture:
-                                                  "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"),
-                                          title: "Title",
-                                          likes: 10,
-                                          isSaved: false,
-                                          media:
-                                              "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Image_created_with_a_mobile_phone.png/800px-Image_created_with_a_mobile_phone.png"),
-                                    );
+                                    return ItemFeed(item: state.feed[index]);
                                   }))
                         ])));
           }),
