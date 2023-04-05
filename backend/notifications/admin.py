@@ -13,6 +13,7 @@ class NotificationAdmin(admin.ModelAdmin):
         "read",
         "content",
         "datetime",
+        "is_friend_request",
     )
     readonly_fields = ["datetime"]
     search_fields = ("user", "challenge")

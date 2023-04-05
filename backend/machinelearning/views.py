@@ -10,6 +10,7 @@ from transformers import (
 )
 import torch
 from PIL import Image
+import os
 
 from .models import Captions
 from .serializers import CaptionSerializer
@@ -55,25 +56,30 @@ class ComputerVisionViewSet(viewsets.ModelViewSet):
 
     @action(methods=["POST"], detail=False, url_path="predict_caption")
     def predict_caption(self, request, **kwargs):
-        image_path = self.request.query_param.get('image_path', None)
-        word = self.request.query_param.get('word', None)
+        image_path = self.request.query_params.get('image_path', None)
+        word = self.request.query_params.get('word', None)
+        print(image_path)
         if not image_path:
-            return Response("Please set image path as a valid post image (media/{image_name})")
-        file = settings.MEDIA_ROOT + image_path
+            return Response("Please set image path as a valid post image", status=status.HTTP_400_BAD_REQUEST)
+        file = os.path.join(settings.MEDIA_ROOT, image_path)
         verified = False
         caption, created = Captions.objects.get_or_create(file=file)
+        print(caption, created)
         if created:
             # Single prediction is incredible inefficient, but this is for demo only.
+            print("Predicting")
             new = predict_step(
                 [file]
                 # ["data/WIN_20230404_22_25_13_Pro.jpg"]
             )[0]
+            print("End prediction")
             if word in new:
                 verified = True
             caption.text = new
             caption.save()
             return Response({"caption": f"{new}", "word_to_detect": word, "verified": verified}, status=status.HTTP_201_CREATED)
         else:
+            print("Caption found")
             if word in caption.text:
                 verified = True
             return Response({"caption": f"{caption.text}", "word_to_detect": word, "verified": verified}, status=status.HTTP_200_OK)

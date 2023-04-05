@@ -46,7 +46,7 @@ class SponsorAdmin(admin.ModelAdmin):
 
 @admin.register(Post)
 class PostAdmin(admin.ModelAdmin):
-    list_display = ("title", "challenge", "owner", "datetime")
+    list_display = ("title", "challenge", "owner", "datetime", "verified")
     list_display_links = ("title",)
     fields = (
         "challenge",
@@ -55,6 +55,8 @@ class PostAdmin(admin.ModelAdmin):
         "owner",
         "liked_by",
         "datetime",
+        "verified",
+        "word",
     )
     readonly_fields = ["datetime"]
     search_fields = ("name",)

@@ -12,4 +12,5 @@ class NotificationSerializer(serializers.ModelSerializer):
             "read",
             "content",
             "datetime",
+            "is_friend_request",
         ]

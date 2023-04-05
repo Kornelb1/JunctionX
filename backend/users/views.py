@@ -13,6 +13,8 @@ from rest_framework.throttling import UserRateThrottle
 from users.serializers import UserSerializer
 from .models import FriendRequest
 
+from notifications.models import Notification
+
 
 class UserViewSet(viewsets.ModelViewSet):
     """
@@ -31,11 +33,18 @@ class UserViewSet(viewsets.ModelViewSet):
         return Response(serializer.data)
 
     @action(methods=["POST"], detail=False, url_path="send_friend_request")
-    def send_friend_request(request, userID):
+    def send_friend_request(self, request):
+        userID = request.query_params.get("userID")
         from_user = request.user
         to_user = get_user_model().objects.get(id=userID)
         friend_request, created = FriendRequest.objects.get_or_create(
             from_user=from_user, to_user=to_user
+        )
+        notif, created = Notification.objects.get_or_create(
+            user=to_user,
+            title=f"Friend Request from {request.user.first_name}",
+            content=f"{friend_request.pk}",
+            is_friend_request=True,
         )
         if created:
             return Response("Friend Request Sent", status=status.HTTP_200_OK)
@@ -43,7 +52,8 @@ class UserViewSet(viewsets.ModelViewSet):
             return Response("Friend Request already sent", status=status.HTTP_200_OK)
 
     @action(methods=["POST"], detail=False, url_path="accept_friend_request")
-    def accept_friend_request(request, requestID):
+    def accept_friend_request(self, request):
+        requestID = request.query_params.get("requestID")
         friend_request = FriendRequest.objects.get(id=requestID)
         if friend_request.to_user == request.user:
             friend_request.to_user.friends.add(friend_request.from_user)

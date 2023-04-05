@@ -1,6 +1,8 @@
-from django.db.models.aggregates import Count
-from rest_framework import viewsets, filters
+from django.db.models.aggregates import Sum, Count
+from rest_framework import viewsets, filters, status
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.decorators import action
+from rest_framework.response import Response
 
 from .models import Challenge, Post, Participant
 from .serializers import (
@@ -40,6 +42,44 @@ class ChallengeViewSet(viewsets.ReadOnlyModelViewSet):
             return qs
 
         return super().get_queryset()
+
+    @action(methods=["GET"], detail=False, url_path="my-stats")
+    def my_stats(self, request):
+        my_completed_challenges = Post.objects.filter(owner__pk=request.user.pk).filter(verified=True).values_list("challenge")
+        values = Challenge.objects.filter(pk__in=my_completed_challenges).values(
+            "emissions", "water", "energy", "plastic", "trees"
+        ).annotate(
+            total_emissions=Sum('emissions')
+        ).annotate(
+            total_water=Sum('water')
+        ).annotate(
+            total_energy=Sum('energy')
+        ).annotate(
+            total_plastic=Sum('plastic')
+        ).annotate(
+            total_trees=Sum('trees')
+        ).values("total_emissions", "total_water", "total_energy", "total_plastic", "total_trees")
+        return Response(values, status=status.HTTP_200_OK)
+
+    @action(methods=["GET"], detail=False, url_path="stats")
+    def others_stats(self, request):
+        user_id = request.query_params.get("user_id")
+        completed_challenges = Post.objects.filter(owner__pk=user_id).filter(verified=True).values_list("challenge")
+        print(completed_challenges)
+        values = Challenge.objects.filter(pk__in=completed_challenges).values(
+            "emissions", "water", "energy", "plastic", "trees"
+        ).annotate(
+            total_emissions=Sum('emissions')
+        ).annotate(
+            total_water=Sum('water')
+        ).annotate(
+            total_energy=Sum('energy')
+        ).annotate(
+            total_plastic=Sum('plastic')
+        ).annotate(
+            total_trees=Sum('trees')
+        ).values("total_emissions", "total_water", "total_energy", "total_plastic", "total_trees")
+        return Response(values, status=status.HTTP_200_OK)
 
 
 class PostViewSet(viewsets.ModelViewSet):
