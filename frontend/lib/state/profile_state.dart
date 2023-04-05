@@ -98,6 +98,21 @@ class UserPreferences {
 }
 
 class ProfileState extends ChangeNotifier {
+  bool gotFriends = false;
+  bool gettingFriends = false;
+  List<User> friends = [];
+
+  void getFriends() async {
+    gettingFriends = true;
+    notifyListeners();
+
+    friends = await service.getFriends();
+
+    gettingFriends = false;
+    gotFriends = true;
+    notifyListeners();
+  }
+
   User user = User();
 
   ProfileService service = ProfileService();

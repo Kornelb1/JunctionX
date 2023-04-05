@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/models/feedItem.dart';
 import 'package:frontend/models/user.dart';
+import 'package:frontend/pages/scr_friends.dart';
 import 'package:frontend/providers/home_provider.dart';
+import 'package:frontend/providers/profile_provider.dart';
 import 'package:frontend/state/home_state.dart';
 import 'package:frontend/theme/theme_manager.dart';
 import 'package:frontend/widgets/base_widget.dart';
@@ -17,8 +19,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  TextEditingController _titleController = TextEditingController();
-
   @override
   Widget build(BuildContext context) {
     final ThemeManager theme =
@@ -42,6 +42,19 @@ class _HomeScreenState extends State<HomeScreen> {
                                   "Home",
                                   style: theme.themeData.textTheme.titleLarge,
                                 ),
+                                IconButton(
+                                    onPressed: () {
+                                      Navigator.push(context,
+                                          MaterialPageRoute(builder: (context) {
+                                        return ProfileProvider(
+                                            child: FriendsScreen());
+                                      }));
+                                    },
+                                    icon: Icon(
+                                      Icons.account_circle_outlined,
+                                      color: theme.colors.green,
+                                      size: 30,
+                                    ))
                               ]),
                           Expanded(
                               child: ListView.builder(

@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:ffi';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:frontend/state/profile_state.dart';
@@ -51,6 +52,80 @@ class ProfileService {
         'status': false,
         'message': 'Oops something went wrong, please try again'
       };
+    }
+  }
+
+  Future<List<User>> getUsers(List<int> user_ids) async {
+    Client client = Client();
+    User user = await UserPreferences().getUser();
+
+    String url;
+
+    url = 'http://10.173.45.133:8000/api/v1/users/';
+
+    var headers = {
+      'Content-Type': 'application/json',
+      'Authorization': "Token ${user.token}"
+    };
+
+    Uri uri = Uri.parse(url);
+
+    List<User> users = [];
+
+    try {
+      Response response = await client.get(uri, headers: headers);
+
+      Map<String, dynamic> responseDecoded = jsonDecode(response.body);
+      if (response.statusCode == 200) {
+        for (var result in responseDecoded['results']) {
+          users.add(User.fromJson(result));
+        }
+      }
+
+      users = users.where((user) => user_ids.contains(user.id)).toList();
+
+      print(users);
+
+      return users;
+    } catch (e) {
+      return users;
+    }
+  }
+
+  Future<List<User>> getFriends() async {
+    Client client = Client();
+    User user = await UserPreferences().getUser();
+
+    String url;
+    List<User> users = [];
+
+    url = 'http://10.173.45.133:8000/api/v1/users/me/';
+
+    Uri uri = Uri.parse(url);
+
+    var headers = {
+      'Content-Type': 'application/json',
+      'Authorization': "Token ${user.token}"
+    };
+
+    List<int> ids = [];
+    try {
+      Response response = await client.get(uri, headers: headers);
+
+      print(response.body);
+      print(response.statusCode);
+
+      Map<String, dynamic> responseDecoded = jsonDecode(response.body);
+      if (response.statusCode == 200) {
+        ids = responseDecoded['friends'].cast<int>();
+        print(ids);
+      }
+
+      users = await getUsers(ids);
+
+      return users;
+    } catch (e) {
+      return users;
     }
   }
 }
