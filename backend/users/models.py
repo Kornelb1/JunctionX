@@ -90,18 +90,26 @@ class User(AbstractBaseUser, PermissionsMixin):
         return f"{self.last_name}, {self.first_name} - {self.email}"
 
 
-class Profile(models.Model):
-    pass
-
-
 class Stats(models.Model):
-    emissions = models.FloatField(default=0.0, help_text="Amount in kilograms of CO2 saved") # kilo ton / kilograms - steps
-    water = models.FloatField(default=0.0, help_text="Amount in litres of water saved") # litres
-    energy = models.FloatField(default=0.0, help_text="Amount in watts of energy saved") # watts
-    plastic = models.FloatField(default=0.0, help_text="Amount in bottles of plastic saved") # bottles
-    trees = models.FloatField(default=0.0, help_text="Number of trees planted") # trees
+    emissions = models.FloatField(
+        default=0.0, help_text="Amount in kilograms of CO2 saved"
+    )  # kilo ton / kilograms - steps
+    water = models.FloatField(
+        default=0.0, help_text="Amount in litres of water saved"
+    )  # litres
+    energy = models.FloatField(
+        default=0.0, help_text="Amount in watts of energy saved"
+    )  # watts
+    plastic = models.FloatField(
+        default=0.0, help_text="Amount in bottles of plastic saved"
+    )  # bottles
+    trees = models.FloatField(default=0.0, help_text="Number of trees planted")  # trees
 
 
 class FriendRequest(models.Model):
-    from_user = models.ForeignKey("User", related_name="from_user", on_delete=models.CASCADE)
-    to_user = models.ForeignKey("User", related_name="to_user", on_delete=models.CASCADE)
+    from_user = models.ForeignKey(
+        "User", related_name="from_user", on_delete=models.CASCADE
+    )
+    to_user = models.ForeignKey(
+        "User", related_name="to_user", on_delete=models.CASCADE
+    )

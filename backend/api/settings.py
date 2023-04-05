@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     "users",
     "challenges",
     "notifications",
+    "machinelearning",
 ]
 
 TEST_RUNNER = "xmlrunner.extra.djangotestrunner.XMLTestRunner"
