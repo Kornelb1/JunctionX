@@ -18,6 +18,7 @@ class UserPreferences {
     String fname,
     String lname,
     String email,
+    int id,
     // Uint8List profilePic
   ) async {
     try {
@@ -30,6 +31,7 @@ class UserPreferences {
         "fname": fname,
         "lname": lname,
         "email": email,
+        "id": id
         // "profilePic": profilePic
       });
 
@@ -45,6 +47,7 @@ class UserPreferences {
     String fname;
     String lname;
     String email;
+    int id;
     // String profilePic;
 
     try {
@@ -56,26 +59,24 @@ class UserPreferences {
       fname = userBox.get("fname") ?? '';
       lname = userBox.get("lname") ?? '';
       email = userBox.get("email") ?? '';
+      id = userBox.get('id');
       // profilePic = userBox.get("profilePic") ?? '';
     } catch (e) {
       return User(
-        token: '',
-        username: '',
-        fname: '',
-        lname: '',
-        email: '',
-        // profilePicture: ''
-      );
+          token: '', username: '', fname: '', lname: '', email: '', id: -1
+          // profilePicture: ''
+          );
     }
 
     User user = User(
-      token: token,
-      username: username,
-      fname: fname,
-      lname: lname,
-      email: email,
-      // profilePicture: profilePic
-    );
+        token: token,
+        username: username,
+        fname: fname,
+        lname: lname,
+        email: email,
+        id: id
+        // profilePicture: profilePic
+        );
 
     return user;
   }

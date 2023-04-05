@@ -1,7 +1,11 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:frontend/models/challenge.dart';
 import 'package:frontend/models/feedItem.dart';
 import 'package:frontend/services/search_service.dart';
+import 'package:frontend/state/profile_state.dart';
+import 'package:image_picker/image_picker.dart';
 
 class SearchState extends ChangeNotifier {
   SearchService service = SearchService();
@@ -65,5 +69,58 @@ class SearchState extends ChangeNotifier {
     gettingFeed = false;
     gotFeed = true;
     notifyListeners();
+  }
+
+  XFile? _xImage;
+
+  Future selectOrTakePhoto(ImageSource imageSource) async {
+    final ImagePicker picker = ImagePicker();
+    final pickedFile = await picker.pickImage(source: imageSource);
+
+    if (pickedFile != null) {
+      _xImage = pickedFile;
+      getNewImage();
+    } else {
+      print('No photo was selected or taken');
+    }
+  }
+
+  ImageProvider<Object> image = const NetworkImage(
+      'https://www.publicdomainpictures.net/pictures/30000/nahled/plain-white-background.jpg');
+
+  String path = '';
+
+  void getNewImage() async {
+    path = _xImage!.path;
+    // final image_upload = File(path).path.toString();
+    // image_upload = Image.file(File(path));
+    final bytes = await File(path).readAsBytes();
+    UserPreferences().updateProfile(bytes);
+    image = Image.memory(bytes).image;
+    notifyListeners();
+  }
+
+  bool loading = false;
+
+  Future<Map<String, dynamic>> uploadPost(int challenge, String title) async {
+    loading = false;
+    setWaiting();
+    // print(challenge);
+    // print(title);
+    Map<String, dynamic> value =
+        await service.uploadPost(challenge, title, path);
+    // await Future.delayed(const Duration(seconds: 1));
+    setWaiting();
+    return value;
+  }
+
+  void setWaiting() {
+    if (loading == false) {
+      loading = true;
+      notifyListeners();
+    } else {
+      loading = false;
+      notifyListeners();
+    }
   }
 }

@@ -1,6 +1,7 @@
 import 'dart:core';
 
 class User {
+  final int id;
   final String token;
   final String username;
   final String fname;
@@ -9,6 +10,7 @@ class User {
   final String profilePicture;
 
   User({
+    this.id = -1,
     this.token = '',
     this.username = '',
     this.fname = '',
@@ -20,6 +22,7 @@ class User {
   factory User.fromJson(Map<String, dynamic> responseData) {
     return User(
         // token: responseData['token'],
+        id: responseData['id'],
         username: responseData['username'],
         fname: responseData['first_name'],
         lname: responseData['last_name'],

@@ -37,7 +37,8 @@ class ProfileService {
             responseDecoded["username"],
             responseDecoded["first_name"],
             responseDecoded["last_name"],
-            responseDecoded["email"]
+            responseDecoded["email"],
+            responseDecoded["id"]
             // responseDecoded["profile_picture"]
             );
         return {'status': true, 'message': 'Login successful'};
