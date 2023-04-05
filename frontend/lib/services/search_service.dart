@@ -77,7 +77,6 @@ class SearchService {
 
       if (response.statusCode == 200) {
         for (var result in responseDecoded['results']) {
-          print(result);
           challenges.add(Challenge.fromJson(result));
         }
       }

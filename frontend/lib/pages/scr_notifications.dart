@@ -40,34 +40,47 @@ class _NotificationScreenState extends State<NotificationScreen> {
                                   color: theme.colors.backgroundColor,
                                   child: Padding(
                                     padding: EdgeInsets.all(10),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      children: [
-                                        Icon(
-                                          Icons.notifications,
-                                          color: theme.colors.green,
-                                          size: 30,
-                                        ),
-                                        SizedBox(
-                                          width: 5,
-                                        ),
+                                    child:
+                                        // Row(
+                                        //   mainAxisAlignment:
+                                        //       MainAxisAlignment.start,
+                                        //   children: [
+                                        //     Icon(
+                                        //       Icons.notifications,
+                                        //       color: theme.colors.green,
+                                        //       size: 30,
+                                        //     ),
+                                        //     SizedBox(
+                                        //       width: 5,
+                                        //     ),
                                         Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              state.nots[index].title,
-                                              overflow: TextOverflow.ellipsis,
-                                            ),
-                                            Text(
-                                              state.nots[index].date,
-                                              style: theme.themeData.textTheme
-                                                  .bodySmall,
-                                            )
-                                          ],
-                                        )
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Container(
+                                          height: 50,
+                                          child: Text(
+                                            state.nots[index].title,
+                                          ),
+                                        ),
+                                        Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Text(
+                                                state.nots[index].date,
+                                                style: theme.themeData.textTheme
+                                                    .bodySmall,
+                                              ),
+                                              Icon(
+                                                Icons.notifications,
+                                                color: theme.colors.green,
+                                                size: 30,
+                                              ),
+                                            ])
                                       ],
+                                      // )
+                                      // ],
                                     ),
                                   ));
                             },
