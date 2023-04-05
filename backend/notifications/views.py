@@ -16,5 +16,7 @@ class NotificationViewSet(viewsets.ModelViewSet):
 
     @action(methods=["PATCH"], detail=False)
     def read_all(self, request, **kwargs):
-        Notification.objects.filter(user=self.request.user, read=False).update(read=True)
+        Notification.objects.filter(user=self.request.user, read=False).update(
+            read=True
+        )
         return Response({"Success": "Marked all as read."}, status=status.HTTP_200_OK)
