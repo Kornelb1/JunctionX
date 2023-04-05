@@ -29,6 +29,7 @@ class ChallengeAdmin(admin.ModelAdmin):
         "energy",
         "plastic",
         "trees",
+        "word",
     )
     search_fields = ("title",)
 
@@ -56,7 +57,6 @@ class PostAdmin(admin.ModelAdmin):
         "liked_by",
         "datetime",
         "verified",
-        "word",
     )
     readonly_fields = ["datetime"]
     search_fields = ("name",)
