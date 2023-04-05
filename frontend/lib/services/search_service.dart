@@ -155,6 +155,39 @@ class SearchService {
     }
   }
 
+  Future<bool> joinChallenge(int id) async {
+    Client client = Client();
+    User user = await UserPreferences().getUser();
+
+    String url = '';
+
+    url = 'http://10.173.45.133:8000/api/v1/participate/';
+
+    var map = <String, dynamic>{};
+    map['user'] = user.id;
+    map['challenge'] = id;
+
+    Uri uri = Uri.parse(url);
+
+    var headers = {
+      'Content-Type': 'application/json',
+      'Authorization': "Token ${user.token}"
+    };
+
+    try {
+      Response response =
+          await client.post(uri, headers: headers, body: jsonEncode(map));
+
+      // Map<String, dynamic> responseDecoded = jsonDecode(response.body);
+      if (response.statusCode == 201) {
+        return true;
+      }
+      return false;
+    } catch (e) {
+      return false;
+    }
+  }
+
   Future<Map<String, dynamic>> uploadPost(
       int challenge, String title, String image) async {
     User user = await UserPreferences().getUser();

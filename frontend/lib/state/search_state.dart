@@ -71,6 +71,10 @@ class SearchState extends ChangeNotifier {
     notifyListeners();
   }
 
+  Future<bool> joinChallenge(int id) async {
+    return service.joinChallenge(id);
+  }
+
   XFile? _xImage;
 
   Future selectOrTakePhoto(ImageSource imageSource) async {

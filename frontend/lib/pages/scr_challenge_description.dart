@@ -126,6 +126,43 @@ class _ChallengeDescScreenState extends State<ChallengeDescScreen> {
                               Text(widget.challenge.longDesc)
                             ])),
                   ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  ClipRRect(
+                      //borderRadius: BorderRadius.circular(12),
+                      child: Stack(children: <Widget>[
+                    Positioned.fill(
+                        child: Container(
+                            decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(12),
+                      color: theme.colors.green,
+                      border: Border.all(width: 1, color: theme.colors.green),
+                    ))),
+                    TextButton(
+                        child: Text("Join Challenge"),
+                        style: TextButton.styleFrom(
+                          minimumSize:
+                              Size(MediaQuery.of(context).size.width, 12),
+                          foregroundColor: Colors.white,
+                          padding: const EdgeInsets.all(12.0),
+                          textStyle: const TextStyle(fontSize: 16),
+                        ),
+                        onPressed: () async {
+                          bool joined =
+                              await state.joinChallenge(widget.challenge.id);
+
+                          if (joined) {
+                            SnackBar snackBar =
+                                SnackBar(content: Text("Joined"));
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(snackBar);
+                          }
+                        })
+                  ])),
+                  SizedBox(
+                    height: 50,
+                  )
                 ],
               ),
             )));
