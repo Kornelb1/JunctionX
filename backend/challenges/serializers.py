@@ -41,6 +41,7 @@ class PostSerializer(serializers.ModelSerializer):
     profile_picture = serializers.FileField(source="owner.profile_picture", required=False)
     name = serializers.CharField(source="owner.first_name", required=False)
     likes = serializers.SerializerMethodField()
+    word = serializers.CharField(source="challenge.word", required=False)
 
     class Meta:
         model = Post
@@ -54,6 +55,7 @@ class PostSerializer(serializers.ModelSerializer):
             "likes",
             "datetime",
             "verified",
+            "word",
         ]
         read_only_fields = [
             "owner",

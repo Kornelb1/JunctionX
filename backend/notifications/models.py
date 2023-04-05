@@ -9,3 +9,4 @@ class Notification(models.Model):
     user = models.ForeignKey("users.User", on_delete=models.CASCADE)
     content = models.TextField(null=True, blank=True)
     datetime = models.DateTimeField(auto_now_add=True)
+    is_friend_request = models.BooleanField(default=False)

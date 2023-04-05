@@ -43,6 +43,8 @@ class Challenge(models.Model):
         "users.User", null=False, blank=False, on_delete=models.CASCADE
     )
 
+    word = models.CharField(max_length=30)
+
     emissions = models.FloatField(
         default=0.0, help_text="Amount in kilograms of CO2 saved"
     )  # kilo ton / kilograms - steps
