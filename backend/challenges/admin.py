@@ -15,12 +15,20 @@ class ChallengeAdmin(admin.ModelAdmin):
     list_display_links = ("title",)
     fields = (
         "title",
-        "description",
+        "short_description",
+        "proof",
+        "reward",
+        "long_description",
         "photo",
         "owner",
         "sponsor",
         "start_date",
         "end_date",
+        "emissions",
+        "water",
+        "energy",
+        "plastic",
+        "trees",
     )
     search_fields = ("title",)
 
@@ -38,14 +46,14 @@ class SponsorAdmin(admin.ModelAdmin):
 
 @admin.register(Post)
 class PostAdmin(admin.ModelAdmin):
-    list_display = ("title", "challenge", "owner", "likes", "datetime")
+    list_display = ("title", "challenge", "owner", "datetime")
     list_display_links = ("title",)
     fields = (
         "challenge",
         "photo",
         "title",
         "owner",
-        "likes",
+        "liked_by",
         "datetime",
     )
     readonly_fields = ["datetime"]
