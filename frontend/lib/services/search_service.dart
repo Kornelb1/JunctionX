@@ -237,4 +237,76 @@ class SearchService {
       };
     }
   }
+
+  Future<bool> isVerified(String image, String word, int id) async {
+    Client client = Client();
+    User user = await UserPreferences().getUser();
+
+    String url = '';
+
+    image = image.substring(32);
+    // print(image);
+
+    // print(word);
+
+    url =
+        "http://10.173.45.133:8000/api/v1/verify-image/predict_caption/?word=$word&image_path=$image";
+    Uri uri = Uri.parse(url);
+
+    var headers = {
+      'Content-Type': 'application/json',
+      'Authorization': "Token ${user.token}"
+    };
+
+    try {
+      Response response = await client.post(uri, headers: headers);
+
+      // print(response.body);
+      // print(response.statusCode);
+
+      Map<String, dynamic> responseDecoded = jsonDecode(response.body);
+      if (response.statusCode == 200 || response.statusCode == 200) {
+        bool update = await verify(id);
+
+        return update;
+      }
+      return false;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  Future<bool> verify(int id) async {
+    Client client = Client();
+    User user = await UserPreferences().getUser();
+
+    String url = '';
+
+    var map = <String, dynamic>{};
+
+    map['verified'] = true;
+
+    url = "http://10.173.45.133:8000/api/v1/feeds/$id/";
+    Uri uri = Uri.parse(url);
+
+    var headers = {
+      'Content-Type': 'application/json',
+      'Authorization': "Token ${user.token}"
+    };
+
+    try {
+      Response response =
+          await client.patch(uri, headers: headers, body: jsonEncode(map));
+
+      print(response.body);
+      print(response.statusCode);
+
+      if (response.statusCode == 200) {
+        return true;
+      }
+      return false;
+    } catch (e) {
+      return false;
+    }
+  }
 }

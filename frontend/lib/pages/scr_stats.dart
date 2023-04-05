@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/models/user.dart';
 import 'package:frontend/pages/scr_acheivements.dart';
 import 'package:frontend/pages/scr_challenges.dart';
 import 'package:frontend/pages/scr_profile.dart';
@@ -13,6 +14,7 @@ class StatisticsScreen extends StatefulWidget {
 
   PageController _goalsController = PageController(initialPage: 0);
   int currentPage = 0;
+  User user = User();
 
   @override
   State<StatisticsScreen> createState() => _StatisticsScreenState();
@@ -27,6 +29,9 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
     return Scaffold(
       body: BaseWidget<ProfileState>(
           state: Provider.of<ProfileState>(context),
+          onStateReady: (p0) async {
+            widget.user = await UserPreferences().getUser();
+          },
           builder: (context, state, child) {
             void navigationCall(int value) {
               setState(() {
@@ -64,7 +69,10 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
                                 physics: const NeverScrollableScrollPhysics(),
                                 children: [
                               ChallengeScreen(),
-                              AchievementScreen()
+                              AchievementScreen(
+                                user: widget.user,
+                                me: true,
+                              )
                             ]))
                       ],
                     )));

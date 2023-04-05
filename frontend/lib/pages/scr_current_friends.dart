@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/pages/scr_acheivements.dart';
+import 'package:frontend/providers/profile_provider.dart';
 import 'package:frontend/state/home_state.dart';
 import 'package:frontend/state/profile_state.dart';
 import 'package:frontend/theme/theme_manager.dart';
@@ -41,28 +43,40 @@ class _CurrentFriendsState extends State<CurrentFriendsScreen> {
                     itemBuilder: (BuildContext context, int index) {
                       return Card(
                           color: theme.colors.backgroundColor,
-                          child: Padding(
-                            padding: EdgeInsets.all(10),
-                            child: Row(
-                              children: [
-                                Icon(
-                                  Icons.account_circle,
-                                  color: theme.colors.green,
-                                  size: 30,
-                                ),
-                                SizedBox(
-                                  width: 5,
-                                ),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
+                          child: InkWell(
+                              onTap: () {
+                                Navigator.push(context,
+                                    MaterialPageRoute(builder: (context) {
+                                  return ProfileProvider(
+                                      child: AchievementScreen(
+                                    user: state.friends[index],
+                                    me: false,
+                                  ));
+                                }));
+                              },
+                              child: Padding(
+                                padding: EdgeInsets.all(10),
+                                child: Row(
                                   children: [
-                                    Text(
-                                        "${state.friends[index].fname} ${state.friends[index].lname}"),
+                                    Icon(
+                                      Icons.account_circle,
+                                      color: theme.colors.green,
+                                      size: 30,
+                                    ),
+                                    SizedBox(
+                                      width: 5,
+                                    ),
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                            "${state.friends[index].fname} ${state.friends[index].lname}"),
+                                      ],
+                                    )
                                   ],
-                                )
-                              ],
-                            ),
-                          ));
+                                ),
+                              )));
                     },
                   ),
                 )
