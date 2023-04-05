@@ -31,10 +31,21 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                            "Home",
-                            style: theme.themeData.textTheme.titleLarge,
-                          ),
+                          Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  "Home",
+                                  style: theme.themeData.textTheme.titleLarge,
+                                ),
+                                IconButton(
+                                    onPressed: () => print("add post"),
+                                    icon: Icon(
+                                      Icons.add,
+                                      color: theme.colors.green,
+                                      size: 30,
+                                    ))
+                              ]),
                           Expanded(
                               child: ListView.builder(
                                   itemCount: state.feed.length,

@@ -23,7 +23,8 @@ class LoginScreen extends StatelessWidget {
       body: BaseWidget<ProfileState>(
         state: Provider.of<ProfileState>(context),
         builder: (context, state, child) {
-          return Stack(children: [
+          return SingleChildScrollView(
+              child: Stack(children: [
             Container(
               color: theme.colors.green,
               height: MediaQuery.of(context).size.height * 0.3,
@@ -114,7 +115,7 @@ class LoginScreen extends StatelessWidget {
                         })
                   ])))
             ]))
-          ]);
+          ]));
         },
       ),
     );

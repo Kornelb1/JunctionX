@@ -65,6 +65,14 @@ class _ChallengeDetailsScreenState extends State<ChallengeDetailsScreen> {
                           widget.challenge.title,
                           style: theme.themeData.textTheme.titleLarge,
                         ),
+                        Spacer(),
+                        IconButton(
+                            onPressed: () => print("add post"),
+                            icon: Icon(
+                              Icons.add,
+                              color: theme.colors.green,
+                              size: 30,
+                            ))
                       ]),
                       const SizedBox(
                         height: 5,
