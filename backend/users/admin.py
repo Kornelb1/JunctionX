@@ -27,16 +27,14 @@ class UserAdmin(UserAdmin):
                     "is_staff",
                     "is_superuser",
                     "user_permissions",
+                    "friends",
+                    "profile_picture",
                 ),
             },
         ),
         (
             _("Important dates"),
-            {
-                "fields": (
-                    "last_login",
-                )
-            },
+            {"fields": ("last_login",)},
         ),
     )
     readonly_fields = ["id"]

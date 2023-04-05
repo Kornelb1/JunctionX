@@ -2,7 +2,7 @@ from django.contrib.auth import authenticate, get_user_model, login, logout
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 
-from rest_framework import viewsets, filters, status, mixins
+from rest_framework import viewsets, filters, status
 from rest_framework.authtoken.models import Token
 from rest_framework.decorators import action
 from rest_framework.views import APIView
@@ -14,7 +14,7 @@ from users.serializers import UserSerializer
 from .models import FriendRequest
 
 
-class UserViewSet(viewsets.ReadOnlyModelViewSet, mixins.UpdateModelMixin):
+class UserViewSet(viewsets.ModelViewSet):
     """
     This viewset automatically provides `list` and `retrieve` actions.
     """
@@ -30,17 +30,19 @@ class UserViewSet(viewsets.ReadOnlyModelViewSet, mixins.UpdateModelMixin):
         serializer = self.get_serializer(request.user)
         return Response(serializer.data)
 
-    @action(methods=["POST"], detail=False)
+    @action(methods=["POST"], detail=False, url_path="send_friend_request")
     def send_friend_request(request, userID):
         from_user = request.user
         to_user = get_user_model().objects.get(id=userID)
-        friend_request, created = FriendRequest.objects.get_or_create(from_user=from_user, to_user=to_user)
+        friend_request, created = FriendRequest.objects.get_or_create(
+            from_user=from_user, to_user=to_user
+        )
         if created:
             return Response("Friend Request Sent", status=status.HTTP_200_OK)
         else:
             return Response("Friend Request already sent", status=status.HTTP_200_OK)
 
-    @action(methods=["POST"], detail=False)
+    @action(methods=["POST"], detail=False, url_path="accept_friend_request")
     def accept_friend_request(request, requestID):
         friend_request = FriendRequest.objects.get(id=requestID)
         if friend_request.to_user == request.user:
@@ -67,8 +69,10 @@ class LoginView(APIView):
                 status=status.HTTP_400_BAD_REQUEST,
             )
         user = authenticate(username=username, password=password)
+        print(user)
         if user is not None:
             if user.is_active:
+                print("Bingo")
                 login(request, user)
                 # CsrfViewMiddleware automatically adds csrf token as cookie
                 # SessionMiddleware automatically adds session id as cookie

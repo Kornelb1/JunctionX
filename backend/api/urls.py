@@ -29,12 +29,12 @@ from rest_framework import permissions
 from rest_framework.routers import DefaultRouter
 
 
-
 from users.views import LoginView, logout_view
 
 from users.urls import router as users_router
 from challenges.urls import router as challenge_router
 from notifications.urls import router as notifications_router
+from machinelearning.urls import router as machinelearning_router
 
 """V1 ROUTER"""
 router = DefaultRouter()
@@ -42,6 +42,7 @@ router = DefaultRouter()
 router.registry.extend(users_router.registry)
 router.registry.extend(challenge_router.registry)
 router.registry.extend(notifications_router.registry)
+router.registry.extend(machinelearning_router.registry)
 
 # Default API Info
 api_info = openapi.Info(

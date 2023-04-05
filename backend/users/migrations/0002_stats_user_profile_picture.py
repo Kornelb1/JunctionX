@@ -6,24 +6,55 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('users', '0001_initial'),
+        ("users", "0001_initial"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Stats',
+            name="Stats",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('emissions', models.FloatField(default=0.0, help_text='Amount in kilograms of CO2 saved')),
-                ('water', models.FloatField(default=0.0, help_text='Amount in litres of water saved')),
-                ('energy', models.FloatField(default=0.0, help_text='Amount in watts of energy saved')),
-                ('plastic', models.FloatField(default=0.0, help_text='Amount in bottles of plastic saved')),
-                ('trees', models.FloatField(default=0.0, help_text='Number of trees planted')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "emissions",
+                    models.FloatField(
+                        default=0.0, help_text="Amount in kilograms of CO2 saved"
+                    ),
+                ),
+                (
+                    "water",
+                    models.FloatField(
+                        default=0.0, help_text="Amount in litres of water saved"
+                    ),
+                ),
+                (
+                    "energy",
+                    models.FloatField(
+                        default=0.0, help_text="Amount in watts of energy saved"
+                    ),
+                ),
+                (
+                    "plastic",
+                    models.FloatField(
+                        default=0.0, help_text="Amount in bottles of plastic saved"
+                    ),
+                ),
+                (
+                    "trees",
+                    models.FloatField(default=0.0, help_text="Number of trees planted"),
+                ),
             ],
         ),
         migrations.AddField(
-            model_name='user',
-            name='profile_picture',
-            field=models.FileField(blank=True, null=True, upload_to=''),
+            model_name="user",
+            name="profile_picture",
+            field=models.FileField(blank=True, null=True, upload_to=""),
         ),
     ]
